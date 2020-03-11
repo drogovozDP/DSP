@@ -1,0 +1,153 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color:white;    
+    background-color: royalblue;
+}
+ul {
+    margin: 0; /* Отступ слева в браузере IE и Opera */
+    padding: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+}
+
+li{
+    list-style-type: none;
+}
+
+basefont{
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    padding-left: 20px;
+}
+
+input[type = "file"]{
+    display: none;   
+}
+
+.clearfix{
+    content:'';
+    display: table;
+    width: 100%;
+    clear: both;
+}
+
+.textNone
+{
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+header{
+    background-color: rgb(148, 106, 236);    
+    display: block;
+    
+}
+
+.heading{  
+    padding-top: 20px;    
+}
+
+.lastname{
+    padding-left:30px;
+    text-transform: uppercase;
+}
+
+.menu{
+    padding: 0;
+    margin: 0;
+    display: block; 
+    padding-left:30px;
+    border-color: black;     
+}
+
+.menu .mainLi{
+    float: left;
+    display: block;
+    text-decoration: none;
+    padding-right: 20px;
+    padding-top: 20px;    
+    padding-bottom: 20px;
+    border-radius: 5px;    
+}
+
+.mainLi:hover ul{/*выпадающее меню*/
+    visibility: visible;
+}
+
+nav ul ul{
+    position: absolute;
+    visibility: hidden;
+    margin:0;
+    padding:0;    
+}
+
+.sub-li{        
+    display: block;    
+    background-color: rgb(148, 106, 236);
+    padding:10px;        
+}
+
+li:hover
+{
+    background-color: rgb(134, 88, 232);
+}
+
+.sub-ul
+{
+    padding-top:20px;
+}
+
+.graphCollection{
+    float: right;
+    width: 400px;
+    background-color: rgb(240, 72, 175);
+    border-radius: 10px;
+    
+}
+
+.newDivTop{
+    background-color: rgb(240, 72, 175);
+    padding:10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.newDiv{
+    background-color: rgb(240, 72, 175);
+    padding:10px;
+}
+
+.newDivBot{
+    background-color: rgb(240, 72, 175);
+    padding:10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.newDiv:hover{
+    background-color: rgb(219, 50, 154);
+}
+
+.newDivTop:hover{
+    background-color: rgb(219, 50, 154);
+}
+
+.newDivBot:hover{
+    background-color: rgb(219, 50, 154);
+}
+
+.graph{
+    background-color: royalblue;
+    padding: 10px;
+    
+}
+
+canvas{
+    margin:0;
+    padding:0;
+    height:70vh;
+    width:70vw;
+    background-color: white;
+}

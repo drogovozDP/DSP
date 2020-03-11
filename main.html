@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>DSP</title>
+        <link rel = "stylesheet" href = "css/design.css">
+        <script src = "js/front.js"></script>
+        <script src = "js/graph.js"></script>
+    <body>
+        <header>
+            <div class = "heading clearfix">
+                <div class = "textNone lastname">dsp-cts-drogovoz-grishina</div>
+                <div>
+                    <nav>
+                        <ul class = "menu">
+                            <li class ="textNone mainLi" id ="file">
+                                <basefont>файл</basefont>
+                                <ul class = "sub-ul">
+                                    <label>
+                                        <li class = "sub-li">  
+                                            загрузить <input type = "file" id = "loadFile" onchange="showFile(this)"/>                                     
+                                        </li>
+                                    </label> 
+                                    <li class = "sub-li">сохранить</li>
+                                </ul>
+                            </li>                                        
+                            <li class ="textNone mainLi" id ="modelling">
+                                <basefont>моделирование</basefont>
+                            </li>               
+                            <li class ="textNone mainLi" id ="filtr">
+                                <basefont>фильтрация</basefont>
+                            </li>
+                            <li class ="textNone mainLi" id ="anal">
+                                <basefont>анализ</basefont>
+                            </li>               
+                            <li class ="textNone mainLi" id ="options">
+                                <basefont>настройки</basefont>
+                            </li>
+                            <li class ="textNone mainLi" id ="program">
+                                <basefont>о программе</basefont>
+                                <ul id = "sub-program" class = "sub-ul">
+                                    <li class = "sub-li">Данный сайт предназначен </br>для иллюстрации многоканальных </br>сигналов. Чтобы посмотреть графики, </br>следует открыть нужный файл</br> и загрузить его на сайт</li>                                    
+                                </ul>                                
+                            </li>
+                        </ul>
+                    </nav>
+                </div>    
+            </div>            
+        </header>
+
+        <section>
+            
+            <ul class = "graphCollection" id = "collection">
+                <li class = "newDivTop newDivBot textNone">меню графиков</li>
+            </ul>
+            <div class = "graph">                
+                <div>
+                   
+                    
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div></div>
+        </footer>
+
+    </body>
+</html>
