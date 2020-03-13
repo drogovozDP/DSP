@@ -104,6 +104,7 @@ li:hover
     width: 400px;
     background-color: rgb(240, 72, 175);
     border-radius: 10px;
+    position: absolute;
     
 }
 
@@ -138,16 +139,13 @@ li:hover
     background-color: rgb(219, 50, 154);
 }
 
-.graph{
-    background-color: royalblue;
-    padding: 10px;
-    
-}
-
 canvas{
     margin:0;
     padding:0;
-    height:70vh;
-    width:70vw;
     background-color: white;
+}
+
+.graphMenu{
+    float:right;
+    margin-right: 400px;
 }
