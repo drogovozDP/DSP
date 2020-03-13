@@ -1,0 +1,50 @@
+<html>
+<head>
+	<title>Fabric</title>
+	<script type="text/javascript" src="Fabric.js"></script>
+    <script type="text/javascript">		
+    let canvas, ctx;
+		function init(){
+            ctx = document.getElementById('canvas').getContext('2d');			
+     
+        
+        canvas = new fabric.Canvas('canvas')
+        
+        let rect = new fabric.Rect({
+            left: 100,
+            top: 100,
+            fill: 'red',
+            width: 20,
+            height: 20
+        });
+
+        canvas.add(rect);
+		//idTimer = setInterval('moveBall();',50);
+        }
+
+        function zoom(isZooming)
+        {
+            if (isZooming) canvas.setZoom(canvas.getZoom() + 0.1);
+            else canvas.setZoom(canvas.getZoom() - 0.1);
+            canvas.renderAll();
+        }
+
+        function makeLine()
+        {
+            ctx.beginPath();
+            ctx.moveTo(34, 34);
+            ctx.lineTo(234, 234);
+            ctx.stroke();
+        }
+	</script>
+	<style type="text/css">
+		canvas { border: 1px solid blue; }
+	</style>
+</head>
+<body onload="init();">
+    <canvas id="canvas" width="600" height="400"></canvas>
+    <input value = 'zoom+' type = 'button' onclick = 'zoom(true)'/>
+    <input value = 'zoom-' type = 'button' onclick = 'zoom(false)'/>
+    <input value = 'line' type = 'button' onclick = 'makeLine()'/>
+</body>
+</html>

@@ -5,7 +5,5 @@ body{
 
 canvas{
     border:2px solid;
-    width: 500px;
-    height: 500px;
     margin-left: 100px;
 }
