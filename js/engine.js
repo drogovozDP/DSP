@@ -4,7 +4,8 @@ let isMove = false;
 
 function init() {
     canvas = document.getElementById('graph');
-    //canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 100;
+    //alert(window.innerHeight - 100);
     ctx = canvas.getContext('2d');
     graph = new Graph(canvas.width / 2, canvas.height / 2, 0, 0);       
 }
@@ -19,44 +20,25 @@ Graph = class
         this.dx = dx;
         this.dy = dy;
         this.constX = 0;
-        this.constY = 0;
-        /*this.Top = false;
-        this.Bot = false;
-        this.Right = false;
-        this.Left = false;  */          
+        this.constY = 0;  
+        this.channel = []; 
+        this.setY = 0;
     }
     
     create()
     {
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'rgb(219, 242, 255)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.beginPath();
-        ctx.moveTo(-this.size + this.dx + this.constX, this.y + this.dy + this.constY);
-        ctx.lineTo(this.size + this.dx + this.constX, this.y + this.dy + this.constY);
+        ctx.moveTo(-this.size + this.dx + this.constX, this.y + this.dy + this.constY + this.setY);
+        ctx.lineTo(this.size + this.dx + this.constX, this.y + this.dy + this.constY + this.setY);
         ctx.stroke();
-        ctx.moveTo(this.x + this.dx + this.constX, -this.size + this.dy + this.constY);
-        ctx.lineTo(this.x + this.dx + this.constX, this.size + this.dy + this.constY);
+        ctx.moveTo(this.x + this.dx + this.constX, -this.size + this.dy + this.constY + this.setY);
+        ctx.lineTo(this.x + this.dx + this.constX, this.size + this.dy + this.constY + this.setY);
         ctx.stroke();
         ctx.closePath();
     }
-    /*
-    move(isMove, direction) 
-    { 
-        if (direction == 0) this.Top = isMove;
-        if (direction == 1) this.Bot = isMove;
-        if (direction == 2) this.Right = isMove;             
-        if (direction == 3) this.Left = isMove;
-        if (direction == 4) this.Left = this.Right = this.Top = this.Bot = false;
-    }
-    
-    fix()
-    { 
-        if(this.Top) this.dy -= 1; 
-        if(this.Bot) this.dy += 1; 
-        if(this.Right) this.dx += 1; 
-        if(this.Left) this.dx -= 1; 
-    }*/
     
     grandFix(dx, dy)
     {
@@ -69,20 +51,45 @@ Graph = class
         this.constX += _resX;
         this.constY += _resY;        
     }    
+    
+    showConst(is_x)
+    {
+        if(is_x) return this.constX;
+        else return this.constY + this.setY;
+    }
+
+    setChannel(_channel)
+    {
+        this.channel = _channel;
+        this.setY = this.channel[1];
+        this.constX = this.constY = 0;
+    }
 
     makeFunc()
     {
-        for(let x = 0; x < 20; x++)
-        {
-            ctx.moveTo(this.x + this.dx + x + 1 + this.constX, this.y + this.dy - (x + 1) * (x + 1) + this.constY);    
-            ctx.lineTo(this.x + this.dx + x + 5 + this.constX, this.y + this.dy - (x + 5) * (x + 5) + this.constY);
-            ctx.stroke();
+        this.channel[0] = 3;
+        let step = this.channel[0];
+        for(let i = 1; i < this.channel.length - 1; i++) 
+        {   
+            //if (((Math.abs(this.setY + this.constY + 0 - this.channel[i]) < canvas.height / 2) || (Math.abs(this.setY + this.constY + 0 - this.channel[i + 1]) < canvas.height / 2)) &&
+            if((Math.abs(this.constX + step + this.dx) < canvas.width / 2) || (Math.abs(this.constX + step  + this.dx - this.channel[0]) < canvas.width / 2))//)
+            {
+                ctx.moveTo(step - this.channel[0] + this.x +  this.dx + this.constX, -this.channel[i] + this.y + this.dy + this.constY + this.setY);
+                ctx.lineTo(step + this.x + this.dx + this.constX, -this.channel[i + 1] + this.y + this.dy + this.constY + this.setY);
+                ctx.stroke();
+            }         
+            
+            step += this.channel[0];
         }
                 
     }
 }
     
 
+function choosGraph(_channel)
+{
+    graph.setChannel(_channel);
+}
 
 
 function mouseDown() { isMove = true; }
@@ -100,10 +107,10 @@ function mouseUp()
 
 function changeData()
 {
+    dinamicX = event.pageX;
+    dinamicY = event.pageY;
     if(isMove) 
-    {
-        dinamicX = event.pageX;        
-        dinamicY = event.pageY;
+    {                        
         graph.grandFix(dinamicX - dataX, dinamicY - dataY)
         
     }
@@ -118,6 +125,11 @@ function scale()
 {                          
     graph.create();     
     graph.makeFunc();
+    if (!isMove)
+    {
+        document.getElementById('coord_x').innerHTML = -graph.showConst(true);// + dinamicX - canvas.width / 2;
+        document.getElementById('coord_y').innerHTML = graph.showConst(false);// - dinamicY + canvas.height / 2 + 96;    
+    }    
 }
 
 setInterval('scale()', 10);
