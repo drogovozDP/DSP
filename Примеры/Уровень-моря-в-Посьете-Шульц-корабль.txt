@@ -1,4 +1,4 @@
-# channels number
+ï»¿# channels number
 5
 # samples number
        626
@@ -9,7 +9,7 @@
 # start time
 10:15:19.000
 # channels names
-x-á;y-á;x-ì;y-ì;sea_level
+x-Ð±;y-Ð±;x-Ð¼;y-Ð¼;sea_level
 -25.3958 -5.49008 21.2578 -1.43123 178 
 58.0361 2.67178 51.9438 4.14242 178 
 43.0736 0.914369 48.5831 3.06305 178 

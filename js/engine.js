@@ -23,6 +23,7 @@ Graph = class
         this.constY = 0;  
         this.channel = []; 
         this.setY = 0;
+        this.zoom = 1;
     }
     
     create()
@@ -31,31 +32,42 @@ Graph = class
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.beginPath();
-        ctx.moveTo(-this.size + this.dx + this.constX, this.y + this.dy + this.constY + this.setY);
-        ctx.lineTo(this.size + this.dx + this.constX, this.y + this.dy + this.constY + this.setY);
+        ctx.moveTo(this.zoom * (-this.size + this.dx + this.constX), this.zoom * (this.y + this.dy + this.constY + this.setY));
+        ctx.lineTo(this.zoom * (this.size + this.dx + this.constX), this.zoom * (this.y + this.dy + this.constY + this.setY));
         ctx.stroke();
-        ctx.moveTo(this.x + this.dx + this.constX, -this.size + this.dy + this.constY + this.setY);
-        ctx.lineTo(this.x + this.dx + this.constX, this.size + this.dy + this.constY + this.setY);
+        ctx.moveTo(this.zoom * (this.x + this.dx + this.constX), this.zoom * (-this.size + this.dy + this.constY + this.setY));
+        ctx.lineTo(this.zoom * (this.x + this.dx + this.constX), this.zoom * (this.size + this.dy + this.constY + this.setY));
         ctx.stroke();
         ctx.closePath();
     }
     
     grandFix(dx, dy)
     {
-        this.dx = dx;
-        this.dy = dy;
+        this.dx = dx * 1 / this.zoom;
+        this.dy = dy * 1 / this.zoom;
     }
 
     constFix(_resX, _resY)
     {
-        this.constX += _resX;
-        this.constY += _resY;        
+        this.constX += _resX * 1 / this.zoom;
+        this.constY += _resY * 1 / this.zoom;        
     }    
-    
-    showConst(is_x)
+
+    setZoom(plus)
     {
-        if(is_x) return this.constX;
-        else return this.constY + this.setY;
+        if((!plus) && (this.zoom > 0)) this.zoom *= 0.9;
+        if(plus) this.zoom *= 1.1;
+    }
+    
+    getZoom()
+    {
+        return this.zoom;
+    }
+
+    getConst(is_x)
+    {
+        if(is_x) return this.constX * this.zoom;
+        else return this.constY * this.zoom + this.setY;
     }
 
     setChannel(_channel)
@@ -63,34 +75,40 @@ Graph = class
         this.channel = _channel;
         this.setY = this.channel[1];
         this.constX = this.constY = 0;
+        this.zoom = 1;
     }
 
     makeFunc()
     {
-        this.channel[0] = 3;
+        //this.channel[0] = 3;
         let step = this.channel[0];
         for(let i = 1; i < this.channel.length - 1; i++) 
         {   
             //if (((Math.abs(this.setY + this.constY + 0 - this.channel[i]) < canvas.height / 2) || (Math.abs(this.setY + this.constY + 0 - this.channel[i + 1]) < canvas.height / 2)) &&
-            if((Math.abs(this.constX + step + this.dx) < canvas.width / 2) || (Math.abs(this.constX + step  + this.dx - this.channel[0]) < canvas.width / 2))//)
-            {
-                ctx.moveTo(step - this.channel[0] + this.x +  this.dx + this.constX, -this.channel[i] + this.y + this.dy + this.constY + this.setY);
-                ctx.lineTo(step + this.x + this.dx + this.constX, -this.channel[i + 1] + this.y + this.dy + this.constY + this.setY);
-                ctx.stroke();
-            }         
-            
+            if((Math.abs((this.constX + step + this.dx)) < (canvas.width / 2) * 1 / (this.zoom * 0.5)) || (Math.abs((this.constX + step  + this.dx - this.channel[0])) < (canvas.width / 2)))//) 
+            {//(canvas.width / 2) * 1 / this.zoom проблема в этом выражении
+                ctx.moveTo(this.zoom * (step - this.channel[0] + this.x +  this.dx + this.constX), this.zoom * (-this.channel[i] + this.y + this.dy + this.constY + this.setY));
+                ctx.lineTo(this.zoom * (step + this.x + this.dx + this.constX), this.zoom * (-this.channel[i + 1] + this.y + this.dy + this.constY + this.setY));                
+            }                     
             step += this.channel[0];
-        }
-                
+        }                
+        ctx.stroke();
     }
 }
     
 
-function choosGraph(_channel)
+function choosGraph(i)
 {
-    graph.setChannel(_channel);
+    graph.setChannel(graphTable[i]);
 }
 
+function zoom(e)
+{
+    if(e.deltaY < 0)
+        graph.setZoom(true);
+    else
+        graph.setZoom(false);
+}
 
 function mouseDown() { isMove = true; }
 function mouseUp() 
@@ -125,11 +143,7 @@ function scale()
 {                          
     graph.create();     
     graph.makeFunc();
-    if (!isMove)
-    {
-        document.getElementById('coord_x').innerHTML = -graph.showConst(true);// + dinamicX - canvas.width / 2;
-        document.getElementById('coord_y').innerHTML = graph.showConst(false);// - dinamicY + canvas.height / 2 + 96;    
-    }    
+    //if (!isMove){document.getElementById('coord_x').innerHTML = graph.getZoom() * (-graph.getConst(true) + dinamicX - canvas.width / 2);document.getElementById('coord_y').innerHTML = graph.getConst(false) - dinamicY + canvas.height / 2 + 96;}    
 }
 
 setInterval('scale()', 10);

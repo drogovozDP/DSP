@@ -6,13 +6,13 @@
         <link rel = "stylesheet" href = "css/design.css">
         <script src = "js/front.js"></script>
         <script src = "js/engine.js"></script>
-    <body onload='init()'>
+    <body onload='init()''>
         <header>
-            <div class = "heading clearfix">
+            <div class = "heading clearfix"  onmousemove = 'mouseUp(), changeData()'>
                 <div class = "textNone lastname">dsp-cts-drogovoz-grishina-tyan</div>
                 <div>
                     <nav>
-                        <ul class = "menu">
+                        <ul>
                             <li class ="textNone mainLi" id ="file">
                                 <basefont>файл</basefont>
                                 <ul class = "sub-ul">
@@ -25,7 +25,58 @@
                                 </ul>
                             </li>                                        
                             <li class ="textNone mainLi" id ="modelling">
-                                <basefont>моделирование</basefont>
+                                <basefont>инструменты</basefont>
+                                <ul class = "sub-ul">
+                                    <li class = "sub-li">
+                                        <label>информация о сигнале</label> 
+                                        <ul>
+                                            <li class = "litable">
+                                                <table id = "TInfo">
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>информация</th>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>число каналов</td>
+                                                        <td id = 'count'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>общее количество отсчётов</td>
+                                                        <td id = 'length'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>частота дискретизации</td>
+                                                        <td id = 'discret'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>дата и время начала записи</td>
+                                                        <td id = 'startDateTime'></td>                                                                                                            
+                                                    </tr>
+                                                    <tr>
+                                                        <td>дата и время окончания записи</td>
+                                                        <td id = 'endDateTime'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>длительность</td>
+                                                        <td id = 'range'></td>                                                      
+                                                    </tr>
+                                                </table>                                                                                                                                   
+                                            </li>                                           
+                                        </ul>    
+                                        <ul class = "secondTable">
+                                            <li class = "litable">
+                                                <div class = "divTable">
+                                                    <table class = "TInfo" id = "TChannels">
+                                                        <tr>
+                                                           <th>канал</th>
+                                                           <th>информация</th>                                                      
+                                                        </tr>                                                                                               
+                                                    </table>
+                                                </div>             
+                                            </li>
+                                        </ul>                                                                       
+                                    </li>                                                                        
+                                </ul>
                             </li>               
                             <li class ="textNone mainLi" id ="filtr">
                                 <basefont>фильтрация</basefont>
@@ -41,13 +92,7 @@
                                 <ul id = "sub-program" class = "sub-ul">
                                     <li class = "sub-li">Данный сайт предназначен </br>для иллюстрации многоканальных </br>сигналов. Чтобы посмотреть графики, </br>следует открыть нужный файл</br> и загрузить его на сайт</li>                                    
                                 </ul>                                                               
-                            </li>
-                            <li class ="textNone mainLi" id ="coord_x">
-                                <basefont>x</basefont>
-                            </li>                               
-                            <li class ="textNone mainLi" id ="coord_y">
-                                <basefont>y</basefont>
-                            </li> 
+                            </li>                            
                         </ul>
                     </nav>
                 </div>    
@@ -56,14 +101,14 @@
 
         <section>
             <div class = 'graphMenu'>
-                <ul class = "graphCollection" id = "collection">
+                <ul class = "graphCollection scroll" id = "collection">
                     <li class = "newDivTop newDivBot textNone">меню графиков</li>
                 </ul>
             </div>
             
             <div>                
-                <div>
-                   <canvas width = '1300', id = 'graph' onmousedown = 'mouseDown()' onmouseup = 'mouseUp()' onmousemove = 'changeData()'></canvas>                    
+                <div onmousedown = 'mouseDown()' onmouseup = 'mouseUp()' onmousemove = 'changeData()' onmousewheel = 'zoom(event)'>
+                   <canvas width = '1300', id = 'graph'></canvas>                    
                 </div>                
             </div>
         </section>
