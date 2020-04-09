@@ -164,7 +164,7 @@ function EndChannels(startDate, startTime)
     }
     else now = new Date(Number(date[2]), Number(date[1]), Number(date[0]), Number(time[0]), Number(time[1]), Number(time[2]));
     now = now.getTime();
-    now += 1 / graphTable[0][0] * graphTable[0].length;
+    now += 1 / graphTable[0][0] * 1000 * graphTable[0].length;
     now = new Date(now);
 
     let year, month, day, hour, minute, second, msecond;
@@ -212,15 +212,17 @@ function RangeDistance(startDate, startTime)
         now = new Date(Number(date[2]), Number(date[1]), Number(date[0]), Number(time[0]), Number(time[1]), Number(time[2]), Number(time[3]));
     }
     else now = new Date(Number(date[2]), Number(date[1]), Number(date[0]), Number(time[0]), Number(time[1]), Number(time[2]));
-    now = now.getTime();    
-    let end = 1 / graphTable[0][0] * graphTable[0].length + now;
+    now = now.getTime() / 1000;    
+    let end = 1 / graphTable[0][0] * 1000 * graphTable[0].length + now;
     let result = end - now;
     let year, month, day, hour, minute, second, msecond;
    
     result = new Date(result);
     
-    year = '000' + String(result.getFullYear() - 1970);
-    
+        year = String(result.getFullYear() - 1970);
+        if (result.getFullYear() - 1970 < 1000) year = '0' + year;
+        if (result.getFullYear() - 1970 < 100) year = '0' + year;
+        if (result.getFullYear() - 1970 < 10) year = '0' + year;
     
         month = String(result.getMonth());
         if (result.getMonth() < 10) month = '0' + month;
