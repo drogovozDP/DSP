@@ -208,14 +208,30 @@ td {
 }
 
 .litable:hover{
-    background: rgb(148, 106, 236);    
+    background: rgb(134, 88, 232);    
 }
 
 .divTable{
-    overflow-y: scroll;
+    overflow-y: hidden;
     max-height: 380px;        
 }
 
 .secondTable{
     margin-left: 295px;
 }
+
+canvas
+{
+    margin: 0;
+    padding: 0;
+}
+
+#graph
+{        
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 0px;
+    width: 1015px;  
+    display: inline-block;  
+}
+

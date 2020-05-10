@@ -1,4 +1,5 @@
 let graphTable = new Array();
+let channelName = [];
 
 function showInfo(_id){
 
@@ -9,16 +10,18 @@ function showInfo(_id){
 
 }
 
-function showFile(input){
+function showFile(input){        
 
     let file = input.files[0];
+    if(typeof(file) == 'undefined') return
+    dropGraphic();
 
     //alert(file.name);
 
     let reader = new FileReader();
 
     reader.readAsText(file, 'UTF-8');
-    let dataTable, subGraphTalbe, channelName = [];
+    let dataTable, subGraphTalbe = [];
         
     file.name
     reader.onload = function() {                
@@ -63,9 +66,33 @@ function showFile(input){
         for(let i = 0; i < channelName.length; i++)
         {                                    
             createMenu(i, channelName);            
-        }    
+        }                            
+
         createTable(channels, channelName, file.name, startDate, startTime);    
     }
+}
+
+function dropGraphic()
+{
+    graphTable = [];
+    canvasTable = [];
+    channelNumber = 0;
+    dx = 0;
+    constX = 0;
+    zooming = 1;
+    menuActOff(0);
+    menuActOff(1);
+    clearInterval(globalInterval);
+
+    let graphics = document.getElementById('graph');
+    while(graphics.firstChild)
+    {
+        graphics.removeChild(graphics.firstChild);
+    }
+    graphics.style.height = '0px';
+    document.getElementById('scrolling').height = '0px';
+    setScale(true);
+    shift = 0;
 }
 
 function createMenu(i, content)
@@ -76,13 +103,14 @@ function createMenu(i, content)
     else newDiv.className = "newDiv textNone";
     
     newDiv.id = 'newDiv' + i;
-    //newDiv.textContent = content[i] + ' ';
     document.getElementById('collection').appendChild(newDiv);
-    newDiv.addEventListener('click', function(){choosGraph(i)})
-    
+    newDiv.addEventListener('contextmenu', function(){choosGraph(i); return false}, false)//здесь должен быть реализован выбор осциллограммы    
+    newDiv.oncontextmenu = new Function('return false;');
+    buttonMenu(newDiv, i);
+
     let newCanvas = document.createElement('canvas');
     newCanvas.id = i;
-    newCanvas.height = 100;
+    newCanvas.height = 50;
     newCanvas.width = 215;
     document.getElementById(newDiv.id).appendChild(newCanvas);
     
@@ -90,32 +118,39 @@ function createMenu(i, content)
     newLabel.textContent = content[i];
     document.getElementById(newDiv.id).appendChild(newLabel);
 
-    let ctx = document.getElementById(i).getContext('2d');     
-    let x = 0;
-    ctx.fillStyle = 'rgb(219, 242, 255)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    let constX = 215 / graphTable[i].length;
-    let y_min = 0;
-    let y_max = 0;
-    for(let j = 0; j < graphTable[i].length; j++)
+    let ctx = document.getElementById(i).getContext('2d');         
+    let constX = newCanvas.width / graphTable[i].length;
+    let y_min = 9999999999999999999999999999;
+    let y_max = -9999999999999999999999999999;
+    for(let j = 1; j < graphTable[i].length; j++)
     {
-        if (graphTable[i][j] < y_min) y_min = graphTable[i][j];
-        if (graphTable[i][j] > y_max) y_max = graphTable[i][j];
+        if (graphTable[i][j] <= y_min) y_min = graphTable[i][j];
+        if  (graphTable[i][j] >= y_max) y_max = graphTable[i][j];
     }
+ 
     let Height = y_max - y_min;
-    let constY = 100 / Height;
+    let constY = newCanvas.height / Height;
     let C = (Height - y_max) * constY;
 
     for(let j = 1; j < graphTable[i].length - 1; j++)
     {
-        ctx.moveTo((j - 1) * constX, 100 - ((graphTable[i][j] * constY) + C));
-        ctx.lineTo(j * constX, 100 - ((graphTable[i][j + 1] * constY) + C));
+        ctx.moveTo((j - 1) * constX, newCanvas.height - ((graphTable[i][j] * constY) + C));
+        ctx.lineTo(j * constX, newCanvas.height - ((graphTable[i][j + 1] * constY) + C));
         
     }
-    ctx.stroke();
-    
-    //let constY = 1;        
+    ctx.fillStyle = 'rgb(219, 242, 255)';
+    ctx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+    ctx.stroke();       
+}
+
+function buttonMenu(newDiv, i)
+{
+    let ul = document.createElement('div');
+    ul.id = "ul_" + i;
+    ul.className = "buttonMenu";
+
+    let li = document.createElement('li');
+    newDiv.appendChild(ul);
 }
 
 function createTable(channels, channelName, fileName, startDate, startTime)
@@ -246,6 +281,44 @@ function RangeDistance(startDate, startTime)
     result = day + '-' + month + '-' + year + '\n' + hour + ':' + minute + ':' + second + '.' + msecond;    
     return result;    
 }
+
+function viewSize(n1, n2)
+{
+    let begin, end;
+    if((typeof(n1) == 'undefined') && (typeof(n2) == 'undefined'))
+    {
+        begin = Number(document.getElementById('setBegin').value);
+        end = Number(document.getElementById('setEnd').value);
+        if ((begin >= end) || (graphTable.length == 0)) return;
+    }
+    else 
+    {
+        if (n1 < n2)
+        {
+            begin = n1 / shift;
+            end = n2 / shift;
+        }
+        else
+        {
+            begin = n2;
+            end = n1;
+        }
+    }
+                
+    constX = -begin * shift;
+    
+    let a = ((graphTable[0].length - 1) * 1) / Math.abs(end - begin);
+    if (zoom_limit(a))zooming = a;
+    if (zooming < 1) zooming = 1;
+    /*dateBegin = begin.split('-');       
+    timeBegin = begin.split(':');
+    alert(dateBegin + ' ' + timeBegin)
+    let now;
+
+    begin = new Date(Number(date[2]), Number(date[1]), Number(date[0]), Number(time[0]), Number(time[1]), Number(time[2]));
+    now = now.getTime() / 1000;    */
+}
+
 
 
 /*
