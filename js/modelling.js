@@ -542,7 +542,7 @@ function normal_noise(canvas, newDiv)
         return a - 6;
     }    
 
-    for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field + sigma * Sum())                
+    for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field + sigma * sigma * Sum())                
         
     if (graphTable.length == 0) channel[0] = 1;
     else channel[0] = graphTable[0][0];
@@ -599,7 +599,7 @@ function autoregres(canvas, newDiv)
                 //console.log(sum_a)
             }
         }        
-        let sum = Sum()
+        let sum = sigma * sigma * Sum() 
         channel.push(sum + sum_b - sum_a)
         sumArr.push(sum)
     } 
