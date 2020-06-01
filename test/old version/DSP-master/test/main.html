@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+    <meta charset = "utf-8">
+    <title>dick</title>
+    <link rel = "stylesheet" href = "disign.css">
+    <script src = "engine.js"></script>
+
+    <script type='text/javascript'>        
+       
+    
+    </script>
+</head>
+<body onload='init()'>
+    <canvas width = '1500' height = '700' id = 'graph' onmousedown = 'mouseDown()' onmouseup = 'mouseUp()' onmousemove = 'changeData()'></canvas>
+    <div>
+        <h1 id = 'data'>0</h1>
+        <h1 id = 'dinamic'>0</h1>        
+        <h1 id = 'result'>0</h1>      
+    </div>
+    <input type = 'button' value = 'scale+' onclick = 'zoom(true)'/>
+    <input type = 'button' value = 'scale-' onclick = 'zoom(false)'/>
+</body>

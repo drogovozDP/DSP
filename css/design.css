@@ -6,7 +6,7 @@ body{
     padding: 0;
     font-family: Arial, sans-serif;
     color:white;    
-    background-color: royalblue;
+    background-color: rgb(65, 105, 225);    
 }
 ul {
     margin: 0; /* Отступ слева в браузере IE и Opera */
@@ -212,7 +212,7 @@ td {
 }
 
 .divTable{
-    overflow-y: hidden;
+    overflow-y: scroll;
     max-height: 380px;        
 }
 
@@ -235,3 +235,6 @@ canvas
     display: inline-block;  
 }
 
+#superChoice{
+    overflow-y: hidden;    
+}

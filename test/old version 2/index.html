@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>DSP</title>
+        <link rel = "stylesheet" href = "css/design.css">
+        <link rel = "stylesheet" href = "css/buttons.css">
+        <script src = "js/front.js"></script>
+        <script src = "js/engine.js"></script>
+        <script src = "js/oscillogram.js"></script>
+        <script src = "js/scroll_coord.js"></script>
+    <body>
+        <header>
+            <div class = "heading clearfix"  >
+                <div class = "textNone lastname">dsp-cts-drogovoz-grishina-tyan</div>
+                <div>
+                    <nav>
+                        <ul>
+                            <li class ="textNone mainLi" id ="file">
+                                <basefont>файл</basefont>
+                                <ul class = "sub-ul">
+                                    <label>
+                                        <li class = "sub-li">  
+                                            загрузить <input type = "file" id = "loadFile" onchange="showFile(this)"/>                                     
+                                        </li>
+                                    </label> 
+                                    <li class = "sub-li">сохранить</li>
+                                </ul>
+                            </li>                                        
+                            <li class ="textNone mainLi" id ="modelling">
+                                <basefont>инструменты</basefont>
+                                <ul class = "sub-ul">
+                                    <li class = "sub-li">
+                                        <label>информация о сигнале</label> 
+                                        <ul>
+                                            <li class = "litable">
+                                                <table id = "TInfo">
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>информация</th>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>число каналов</td>
+                                                        <td id = 'count'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>общее количество отсчётов</td>
+                                                        <td id = 'length'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>частота дискретизации</td>
+                                                        <td id = 'discret'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>дата и время начала записи</td>
+                                                        <td id = 'startDateTime'></td>                                                                                                            
+                                                    </tr>
+                                                    <tr>
+                                                        <td>дата и время окончания записи</td>
+                                                        <td id = 'endDateTime'></td>                                                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>длительность</td>
+                                                        <td id = 'range'></td>                                                      
+                                                    </tr>
+                                                </table>                                                                                                                                   
+                                            </li>                                           
+                                        </ul>    
+                                        <ul class = "secondTable">
+                                            <li class = "litable">
+                                                <div class = "divTable">
+                                                    <table class = "TInfo" id = "TChannels">
+                                                        <tr>
+                                                           <th>канал</th>
+                                                           <th>информация</th>                                                      
+                                                        </tr>                                                                                               
+                                                    </table>
+                                                </div>             
+                                            </li>
+                                        </ul>                                                                       
+                                    </li>                                                                        
+                                </ul>
+                            </li>               
+                            <li class ="textNone mainLi" id ="filtr">
+                                <basefont>фильтрация</basefont>
+                            </li>
+                            <li class ="textNone mainLi" id ="anal">
+                                <basefont>анализ</basefont>
+                            </li>               
+                            <li class ="textNone mainLi" id ="options">
+                                <basefont>настройки</basefont>
+                            </li>
+                            <li class ="textNone mainLi" id ="program">
+                                <basefont>о программе</basefont>
+                                <ul id = "sub-program" class = "sub-ul">
+                                    <li style = "border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;"class = "sub-li">Данный сайт предназначен </br>для иллюстрации многоканальных </br>сигналов. Чтобы посмотреть графики, </br>следует открыть нужный файл</br> и загрузить его на сайт</li>                                    
+                                </ul>                                                               
+                            </li>                        
+                        </ul>
+                    </nav>
+                </div>    
+            </div>            
+        </header>
+
+        <section>                       
+            <div class = 'graphMenu'>
+                <ul class = "graphCollection scroll" id = "collection">
+                    <li class = "newDivTop newDivBot textNone">меню графиков</li>
+                </ul>
+            </div>
+            <div id = "borderActMenuGraph">
+                <div class = 'actionMenuGraph textNone' id = 'menuActionGraph'>                  
+                    <div class = 'butt_Menu' onclick="zoom(true)"><basefont>увеличить масштаб</basefont></div> 
+                    <div class = 'butt_Menu' onclick="zoom(false)"><basefont>уменьшить масштаб</basefont></div> 
+                    <div style = 'border-bottom-left-radius: 10px'class = 'butt_Menu' onclick = "menuActOff(1)"><basefont>Закрыть меню</basefont></div>
+                </div>
+            </div>
+            <div id = "borderActMenu">
+                <div class = 'actionMenu textNone' id = 'menuAction'>
+                    <div style = 'border-top-left-radius: 10px'class = 'butt_Menu' id = 'oscillogram' onclick="oscillogram()"><basefont>Осциллограмма</basefont></div>
+                    <div class = 'butt_Menu'><basefont>Спектр Фурье</basefont></div>
+                    <div class = 'butt_Menu'><basefont>Вейвлетограмма</basefont></div>
+                    <div class = 'butt_Menu'><basefont>Спектограмма</basefont></div>
+                    <div class = 'butt_Menu'><basefont>Корреляция с...</basefont></div>
+                    <div class = 'butt_Menu'><basefont>Кросс-спектр с...</basefont></div>
+                    <div class = 'butt_Menu' style = "border-top: 1px solid black;"><basefont>Скрыть</basefont></div>
+                    <div class = 'butt_Menu'><basefont>Скрыть всё кроме этого</basefont></div>
+                    <div class = 'butt_Menu'><basefont>Показать всё</basefont></div>
+                    <div class = 'butt_Menu' style = "border-top: 1px solid black;"><basefont>Фильтрация</basefont></div>
+                    <div style = 'border-bottom-left-radius: 10px'class = 'butt_Menu' onclick = "menuActOff(0)"><basefont>Закрыть меню</basefont></div>
+                </div>
+            </div>
+            <section style="width: 100px">
+                <div id = "graph" onmousedown = 'mouseDown()' onmouseup = 'mouseUp()' onmousemove = 'changeData()'></div>                               
+            </section>
+                
+        </section>
+        <button style="margin-left: 50px" onclick="asdf()">asdf</button>
+        <button id = 'button'>jojo</button>
+        <div>
+            <h1 id = 'data'>0</h1>
+            <h1 id = 'dinamic'>0</h1>        
+            <h1 id = 'result'>0</h1>      
+        </div>
+        <footer>
+            <div></div>
+        </footer>
+
+    </body>
+</html>

@@ -45,14 +45,14 @@ Graph = class
 
     constFix(_resX, _resY)
     {
-        this.constX += _resX * 1/this.zoom + 100;
-        this.constY += _resY * 1/this.zoom + 100;        
+        this.constX += _resX * 1/this.zoom;
+        this.constY += _resY * 1/this.zoom;        
     }    
 
     setZoom(plus)
     {
-        if((!plus) && (this.zoom > 0.11)) this.zoom -= 0.1;
-        if(plus) this.zoom += 0.1;
+        if((!plus) && (this.zoom > 0)) this.zoom *= 0.9;
+        if(plus) this.zoom *= 1.1;
     }
 
     makeFunc()
@@ -99,9 +99,13 @@ function changeData()
     }    
 }
 
-function zoom(zooming)
+
+function zoom(e)
 {
-    graph.setZoom(zooming);
+    if(e.deltaY < 0)
+        graph.setZoom(true);
+    else
+        graph.setZoom(false);
 }
 
 function scale()
@@ -116,3 +120,6 @@ function scale()
 }
 
 setInterval('scale()', 10);
+
+//let a = [3,5,6,7,1,3];
+//alert(Math.max.apply(null, a));

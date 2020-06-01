@@ -1,0 +1,46 @@
+#borderActMenu
+{
+    float:right;
+    margin-right: 465px;
+}
+
+.actionMenu 
+{    
+    position: absolute;
+    float: right;
+    display: none;
+    margin-top:0px;
+    background-color: rgb(240, 72, 175);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    
+}
+
+.butt_Menu
+{
+    padding-right:20px;
+    padding-bottom:10px;
+    padding-top:10px;
+}
+
+.butt_Menu:hover
+{    
+    background-color: rgb(219, 50, 154);
+}
+
+#borderActMenuGraph
+{
+    float:left;
+    margin-left: 1015px;
+}
+
+.actionMenuGraph
+{    
+    position: absolute;
+    float: right;
+    display: none;
+    margin-top:0px;
+    background-color: rgb(240, 72, 175);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}

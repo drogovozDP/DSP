@@ -45,3 +45,31 @@
     border-bottom-left-radius: 10px;
 }
 
+.promptModel
+{
+    background-color: rgb(240, 72, 175);
+    border-radius: 10px;
+    position: absolute;
+    left: 600px;
+    top: 96px;
+    opacity: 1;
+    padding:50px;
+    padding-bottom: 30px;
+    padding-top: 10px;
+    display: none
+}
+
+.promptButton
+{
+    background-color: rgb(240, 72, 175);    
+    padding-bottom:10px;
+    padding-top:10px;
+}
+
+.promptButton:hover
+{
+    background-color: rgb(219, 50, 154);
+}
+
+
+

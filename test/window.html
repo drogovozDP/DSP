@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<style>
+#mydiv {
+    position: absolute;
+    z-index: 9;
+    background-color: #f1f1f1;
+    text-align: center;
+    border: 1px solid #d3d3d3;
+}
+
+#mydivheader {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+}
+</style>
+<body>
+
+<button id = 'button'>butt</button>
+
+<script>
+var button = document.getElementById('button'),
+              //  0       1         2
+    buttonMap = ['Left', 'Middle', 'Right'],
+    handler = function (event) {
+        event = window.event;
+        alert(buttonMap[event.button] + ' id: ' + event.button);
+    };
+
+if (button.addEventListener) {
+     button.addEventListener('mousedown',  handler, false);     
+} else {
+     // IE         0      1       2        3      4
+     buttonMap = ['???', 'Left', 'Right', '???', 'Middle'];
+     button.attachEvent('onmousedown',  handler);
+}
+</script>
+
+</body>
+</html>
+
+
+

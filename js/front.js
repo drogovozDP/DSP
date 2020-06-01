@@ -5,8 +5,7 @@ function showInfo(_id){
 
     let a = 'sub-' + _id;
     if (document.getElementById(a).style.visibility == 'visible')document.getElementById(a).style.visibility = 'hidden';
-    else document.getElementById(a).style.visibility = 'visible';
-    //alert(a)
+    else document.getElementById(a).style.visibility = 'visible';    
 
 }
 
@@ -14,9 +13,7 @@ function showFile(input){
 
     let file = input.files[0];
     if(typeof(file) == 'undefined') return
-    dropGraphic();
-
-    //alert(file.name);
+    dropGraphic();    
 
     let reader = new FileReader();
 
@@ -44,7 +41,9 @@ function showFile(input){
         subGraphTalbe = dataTable;
       
         channelName = dataTable[5].split(';');//имена каналов        
-        let discretStep = Number(dataTable[2]);//шаг дискретизации
+        channelName[channelName.length - 1] = channelName[channelName.length - 1].substr(0, channelName[channelName.length - 1].length - 1);
+        
+        discretStep = Number(dataTable[2]);//частота дискретизации
         
         let startDate = dataTable[3].split(';');
         let startTime = dataTable[4].split(';');
@@ -65,10 +64,12 @@ function showFile(input){
 
         for(let i = 0; i < channelName.length; i++)
         {                                    
-            createMenu(i, channelName);            
+            createMenu(i);            
         }                            
-
-        createTable(channels, channelName, file.name, startDate, startTime);    
+        
+        global_length = model_length = graphTable[0].length
+        
+        createTable(channels, file.name, startDate, startTime);      
     }
 }
 
@@ -83,6 +84,7 @@ function dropGraphic()
     menuActOff(0);
     menuActOff(1);
     clearInterval(globalInterval);
+    globalInterval = null;
 
     let graphics = document.getElementById('graph');
     while(graphics.firstChild)
@@ -95,11 +97,11 @@ function dropGraphic()
     shift = 0;
 }
 
-function createMenu(i, content)
+function createMenu(i)
 {
     let newDiv = document.createElement('li');
     if(i == 0) newDiv.className = "newDivTop textNone";
-    else if(i == content.length - 1) newDiv.className = "newDivBot textNone";
+    else if(i == channelName.length - 1) newDiv.className = "newDivBot textNone";
     else newDiv.className = "newDiv textNone";
     
     newDiv.id = 'newDiv' + i;
@@ -115,13 +117,14 @@ function createMenu(i, content)
     document.getElementById(newDiv.id).appendChild(newCanvas);
     
     newLabel = document.createElement('label');
-    newLabel.textContent = content[i];
+    newLabel.textContent = channelName[i];
     document.getElementById(newDiv.id).appendChild(newLabel);
 
-    let ctx = document.getElementById(i).getContext('2d');         
+    let ctx = document.getElementById(i).getContext('2d');             
     let constX = newCanvas.width / graphTable[i].length;
-    let y_min = 9999999999999999999999999999;
-    let y_max = -9999999999999999999999999999;
+    
+    let y_min = Number.MAX_VALUE
+    let y_max = -Number.MAX_VALUE
     for(let j = 1; j < graphTable[i].length; j++)
     {
         if (graphTable[i][j] <= y_min) y_min = graphTable[i][j];
@@ -153,7 +156,7 @@ function buttonMenu(newDiv, i)
     newDiv.appendChild(ul);
 }
 
-function createTable(channels, channelName, fileName, startDate, startTime)
+function createTable(channels, fileName, startDate, startTime)
 {
     document.getElementById('count').innerHTML = channels;
     document.getElementById('length').innerHTML = graphTable[0].length - 1;
@@ -167,28 +170,36 @@ function createTable(channels, channelName, fileName, startDate, startTime)
     {
         table.removeChild(table.lastChild);
     }
-    for(let i = 0; i < channels; i++)
-    {
-        let newTdName = document.createElement('td');
-        newTdName.id = "td_" + i;
-        newTdName.textContent = channelName[i];
+    for(let i = 0; i < channels; i++) add_info_table(i, fileName)    
+}
 
-        let newTdContent = document.createElement('td');
-        newTdContent.id = "td_cntent_" + i;
-        newTdContent.textContent = fileName;
+function add_info_table(i, fileName)
+{
+        
+    let newTdName = document.createElement('td');
+    newTdName.id = "td_" + i;
+    newTdName.textContent = channelName[i];
+    
+    if (isNaN(i)) newTdName.textContent = i;
+    else if (typeof(channelName[i]) == 'undefined') newTdName.textContent = 'MODEL';
 
-        let newTr = document.createElement('tr');
-        newTr.id = "tr_" + i;
-        newTr.appendChild(newTdName);
-        newTr.appendChild(newTdContent);
-        document.getElementById('TChannels').appendChild(newTr);                    
-    }
+    let newTdContent = document.createElement('td');
+    newTdContent.id = "td_cntent_" + i;
+    newTdContent.textContent = fileName;
+
+    let newTr = document.createElement('tr');
+    newTr.id = "tr_" + i;
+    newTr.appendChild(newTdName);
+    newTr.appendChild(newTdContent);
+    document.getElementById('TChannels').appendChild(newTr);
+    
+    superList(true)
 }
 
 function EndChannels(startDate, startTime)
 {
     date = String(startDate).split('-');       
-    time = String(startTime).split(':');
+    time = String(startTime).split(':');    
     let a = time[2].split('.');
     let now;
     if(Number(a[1]) != 0) 
@@ -310,38 +321,4 @@ function viewSize(n1, n2)
     let a = ((graphTable[0].length - 1) * 1) / Math.abs(end - begin);
     if (zoom_limit(a))zooming = a;
     if (zooming < 1) zooming = 1;
-    /*dateBegin = begin.split('-');       
-    timeBegin = begin.split(':');
-    alert(dateBegin + ' ' + timeBegin)
-    let now;
-
-    begin = new Date(Number(date[2]), Number(date[1]), Number(date[0]), Number(time[0]), Number(time[1]), Number(time[2]));
-    now = now.getTime() / 1000;    */
 }
-
-
-
-/*
-var now = new Date(2011, 0, 1, 23, 234, 0);
-let date = Date(now);
-var timestamp = 1177186363 * 1000;
-var t = new Date(timestamp * 1);
-t = t.getTime()/1000;
-
-alert(t);
-alert(
-    t.getFullYear() + "\n" +
-    t.getMonth() + "\n" +
-    t.getDate() + "\n" +
-    t.getHours() + '\n' +
-    t.getMinutes() + '\n' +
-    t.getSeconds() + '\n' +
-    t.getMilliseconds()
-);
-//alert(strtotime('18:32:21.000'))
-
-var s1 = 'qwer zxc qwer qwzerz',
-    s2 = 'qwer';
- 
-s1 = s1.replace (new RegExp (s2, 'g'), '');
-alert(s1);//zxc qwzerz*/

@@ -1,4 +1,4 @@
-let canvas, ctx, graph, canvasTable, channelNumberLocal, graphDiv, globalInterval;
+let canvas, ctx, graph, canvasTable, channelNumberLocal, graphDiv, globalInterval, global_length;
 
 canvasTable = new Array();
 
@@ -13,6 +13,8 @@ function choosGraph(i)
     //graph.setChannel(graphTable[i]);
     //canvas.width = 1300;
     //canvas.height = window.innerHeight - 100;
+    
+    //alert(document.getElementById(i.id))    
     channelNumber = i;
     document.getElementById('menuAction').style.marginTop = event.pageY - 200 + "px";
     document.getElementById('menuAction').style.display = 'block';
@@ -23,6 +25,33 @@ function choosGraphLocal(i)
     channelNumberLocal = i;
     document.getElementById('menuActionGraph').style.marginTop = event.pageY - 200 + "px";
     document.getElementById('menuActionGraph').style.display = 'block';
+}
+
+function fixHeight()
+{
+    if(graphDiv.childNodes.length == 0) graphDiv.style.height = '225px';
+    if(graphDiv.childNodes.length == 3) graphDiv.style.height = '377px';
+    if(graphDiv.childNodes.length == 4) graphDiv.style.height = '530px';
+    if(graphDiv.childNodes.length == 5) graphDiv.style.height = '685px';    
+}
+
+function add_listeners(canvas)
+{
+    //alert(canvas)
+    canvas.addEventListener('contextmenu', function(){choosGraphLocal(this); return false}, false)//здесь должен быть реализован выбор осциллограммы    
+    canvas.addEventListener('mousedown', function(){mouseDown(1)})
+    canvas.addEventListener('mousemove', function(){changeData(1)})
+    canvas.addEventListener('mouseup', function(){mouseUp(1)})
+
+    canvas.oncontextmenu = new Function('return false;');
+}
+
+function move()
+{        
+    if (!globalInterval) 
+    {        
+        globalInterval = setInterval('scale()', 10);      
+    }
 }
 
 function oscillogram()
@@ -36,35 +65,17 @@ function oscillogram()
     }
 
     graphDiv = document.getElementById('graph');
-    if(graphDiv.childNodes.length == 0) graphDiv.style.height = '225px';
-    if(graphDiv.childNodes.length == 3) graphDiv.style.height = '377px';
-    if(graphDiv.childNodes.length == 4) graphDiv.style.height = '530px';
-    if(graphDiv.childNodes.length == 5) graphDiv.style.height = '685px';    
-    /*let a = Number(graphDiv.style.height.slice(0, 3)) + 160;
-    if (a < 600)graphDiv.style.height = String(a) + 'px';
-    else graphDiv.style.height = '626px';
-
-    let dio = document.createElement('canvas');
-    dio.width = 100;
-    dio.height = 150;
-    document.getElementById('dio').appendChild(dio);
-*/
+    fixHeight();
 
     canvas = document.createElement('canvas');
     canvas.width = globalCanvasWidth;
     canvas.height = 150;
     canvas.id = "canvas_" + channelNumber;            
 
-    canvas.addEventListener('contextmenu', function(){choosGraphLocal(this); return false}, false)//здесь должен быть реализован выбор осциллограммы    
-    canvas.addEventListener('mousedown', function(){mouseDown(1)})
-    canvas.addEventListener('mousemove', function(){changeData(1)})
-    canvas.addEventListener('mouseup', function(){mouseUp(1)})
+    add_listeners(canvas);
 
-    canvas.oncontextmenu = new Function('return false;');
-            
-
-    let y_min = 9999999999999999999999999999;
-    let y_max = -9999999999999999999999999999;
+    let y_min = Number.MAX_VALUE;
+    let y_max = -Number.MAX_VALUE;
     let channel = graphTable[channelNumber];
     
     for(let j = 1; j < channel.length; j++)
@@ -73,7 +84,7 @@ function oscillogram()
         if (channel[j] >= y_max) y_max = channel[j];        
     }
     
-    let height = y_max - y_min;//почему не по модулю? Подоздрительно, проверь на бумаге   
+    let height = y_max - y_min;
     let constY = canvas.height / height;     
 
     let C = (height - y_max) * constY;
@@ -104,7 +115,7 @@ function oscillogram()
         let b = document.createElement('div');
         graphDiv.appendChild(b);
         canvasTable.push(b);
-        globalInterval = setInterval('scale()', 10);    
+        move();  
     }
     
 
@@ -113,7 +124,7 @@ function oscillogram()
 
     graphDiv.appendChild(canvas);    
     ctx = document.getElementById("canvas_" + channelNumber).getContext('2d');
-    let graph = new Graph(x, canvas, channel, constY, C, ctx, channelNumber, y_min, y_max);
+    let graph = new Graph(canvas, channel, channelNumber, y_min, y_max);
     canvasTable.push(graph);         
     let coordBot = document.createElement('canvas');
     coordBot.width = 1015;
@@ -121,18 +132,10 @@ function oscillogram()
     
     graphDiv.appendChild(coordBot);    
     ctxBot = coordBot.getContext('2d');
-    canvasTable.push(new Abscise(ctxBot, coordBot, 1 / graphTable[0][0] * 1000, channel.length, x, false))      
-    
+    canvasTable.push(new Abscise(ctxBot, coordBot, 1 / graphTable[0][0] * 1000, channel.length, x, false))              
+
     menuActOff(0);
     return;
-   
-    /*canvas.height += 150;    
-    ctx.beginPath();
-    ctx.moveTo(0, canvas.height - 150);
-    ctx.lineTo(canvas.width, canvas.height - 150);
-    ctx.stroke();
-    ctx.closePath();*/
-  
 }
 
 function menuActOff(digit)

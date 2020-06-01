@@ -1,13 +1,13 @@
 Graph = class
 {
-    constructor(x, canvas, channel, constY, C, ctx, channelNumber, y_min, y_max)
+    constructor(canvas, channel, channelNumber, y_min, y_max)
     {        
-        this.x = x;
-        this.constY = constY;
+        this.x = canvas.width / (channel.length - 1);        
+        this.constY = canvas.height / (y_max - y_min);
         this.canvas = canvas;        
         this.channel = channel; 
-        this.CONST = C;
-        this.ctx = ctx;
+        this.CONST = (-y_min) * (canvas.height / (y_max - y_min));//let C = (height - y_max) * constY;
+        this.ctx = canvas.getContext('2d');
         this.channelNumber = channelNumber;
         this.current_step = 0;
         this.y_min = y_min;
@@ -16,7 +16,7 @@ Graph = class
     
     setScale(max, min)
     {
-        let height = max - min;//почему не по модулю? Подоздрительно, проверь на бумаге   
+        let height = max - min; 
         this.constY = this.canvas.height / height;     
         this.CONST = (height - max) * this.constY;
     }
@@ -37,7 +37,7 @@ Graph = class
             {
                 let a = ((i - 1) * this.x + dx + constX) * zooming + 100;
                 let b = (i * this.x + dx + constX) * zooming + 100;
-                if(((a > 100) && (a <= 1000)) || ((b > 100) && (b <= 1000)))
+                if(((a > 100) && (a <= 1000)) || ((b > 100) && (b <= 1000))) 
                 {
                     this.ctx.moveTo(((i - 1) * this.x + dx + constX) * zooming + 100, this.canvas.height - ((this.channel[i] * this.constY) + this.CONST));
                     this.ctx.lineTo((i * this.x + dx + constX) * zooming + 100, this.canvas.height - ((this.channel[i + 1] * this.constY) + this.CONST));
@@ -58,8 +58,8 @@ Graph = class
                     let localLength = i;
                     let c = a
                     let d = b
-                    let y_min = 9999999999999999999999999999;
-                    let y_max = -9999999999999999999999999999;
+                    let y_min = Number.MAX_VALUE;
+                    let y_max = -Number.MAX_VALUE;
                     while (((c > 100) && (c <= 1000)) || ((d > 100) && (d <= 1000)))
                     {                        
                         if (this.channel[localLength] <= y_min) y_min = this.channel[localLength];
@@ -162,3 +162,4 @@ Graph = class
     
     //------------------------------------хуевый-код------------------------------------------------------//
 };
+

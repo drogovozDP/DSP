@@ -52,7 +52,8 @@ Abscise = class
         for (let i = 0; i <= end; i++)
         {
             let a = (i * 250) + (dx + constX) * zooming + 100;
-            if ((a > 0) && (a < 1000))    
+            let b = (i * 250) + (dx + constX) * zooming + 250;
+            if (((a > 0) && (a < 1000)) || ((b > 0) && (b < 1000)))
             {
                 this.ctx.moveTo(((i * 250)/ zooming + dx + constX) * zooming + 100, coordStart);
                 this.ctx.lineTo(((i * 250)/ zooming + dx + constX) * zooming + 100, coordFinish);   
@@ -108,13 +109,17 @@ function zoom(zoom_plus)
 
 function zoom_limit(checkZoom)
 {
+    
     let check = 0;
     let value = 0;
-    for (let i = 0; i < graphTable[0].length - 1; i++)
+    for (let i = 0; i < global_length - 1; i++)
     {
         value = i * shift * checkZoom;
         if (value < globalCanvasWidth) check ++
     }
+    /*console.log('shift: ', shift)
+    console.log('global_length: ', global_length)
+    console.log('value: ', value)*/
     if (check < 20) return false;
     else return true;
 }
@@ -135,9 +140,7 @@ function closeAll(check)//эта хуета не работает
 }
 
 function closeSignal(check)
-{
-
-    
+{    
     let count, object;
     
     if (check == 0)
@@ -150,6 +153,12 @@ function closeSignal(check)
     {
         count = channelNumberLocal.id;
         object = channelNumberLocal;
+    }
+
+    if (document.getElementById(count) == null) 
+    {
+        menuActOff(check);
+        return;
     }
 
     document.getElementById('graph').removeChild(object);        
@@ -182,6 +191,7 @@ function closeSignal(check)
         document.getElementById('scrolling').height = '0px';
         
         clearInterval(globalInterval);
+        globalInterval = null;
     }   
 
     menuActOff(check);
