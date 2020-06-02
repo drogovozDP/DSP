@@ -2,18 +2,21 @@ answers = [true, true, false, true, false, false, true]
 userAnswers = new Array()
 
 
+
 function addListeners()
-{
+{    
+    if (localStorage.getItem('check') == 'true')
+    {
+        //alert('пиздец!!!')
+        realniy_prikol()
+        return
+    }
+    
     let prikolButton = document.getElementById('prikol')
 
     prikolButton.addEventListener('click', function(){checkPrikol(true)})
     prikolButton.addEventListener('contextmenu', function(){checkPrikol(false)})
     prikolButton.oncontextmenu = new Function('return false')    
-    if (localStorage.getItem('check') == 'true')
-    {
-        //alert('пиздец!!!')
-        realniy_prikol()
-    }
 }
 
 function checkPrikol(leftButt)
