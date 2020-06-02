@@ -151,6 +151,7 @@ function modelMenu()
             model_length = 0;
             return;
         } 
+        model_length--
         if (typeof(global_length) == 'undefined') global_length = model_length;
         
     }

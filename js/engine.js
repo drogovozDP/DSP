@@ -138,6 +138,27 @@ function oscillogram()
     return;
 }
 
+function showEverything()
+{
+    for (let i = 0; i < graphTable.length; i++)
+    {
+        channelNumber = i
+        oscillogram()
+    }
+}
+
+function showOneHideAll(check)
+{
+    let j = channelNumber
+    for (let i = 0; i < graphTable.length; i++) 
+    {
+        channelNumber = i
+        closeSignal(check)
+    }
+    channelNumber = j
+    oscillogram()
+}
+
 function menuActOff(digit)
 {    
     if (digit == 0){document.getElementById('menuAction').style.display = 'none'; }

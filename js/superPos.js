@@ -78,6 +78,8 @@ function popSuperList()
 
 //---------------------------реализация-суперпозиции---------------------------//
 
+let superMap = new Map()
+
 function superPosition(plus)
 {
     let list_length = document.getElementById('superChoice').children.length
@@ -122,7 +124,24 @@ function superPosition(plus)
     }
 
     name = document.getElementById('superName').value
-    if (name == '') name = 'super position'
+    if (name == '') name = 'SuperPosition'
+
+    if (superMap.get(name) == undefined) superMap.set(name, name)    
+    else 
+    {
+        let i = 0
+        name += '_' + i
+        while (superMap.get(name) != undefined) 
+        {            
+            i++
+            name = name.substr(0, name.length - 2) + '_' + i
+            console.log(i)
+        }
+        
+        superMap.set(name, name)
+    }
+
+    alert(superMap.get(name))
 
     graphTable.push(newChannel)
     channelName.push(name)

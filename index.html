@@ -12,11 +12,12 @@
         <script src = "js/modelling.js"></script>
         <script src = "js/download.js"></script>
         <script src = "js/superPos.js"></script>
+        <script src = "js/prikol.js"></script>
 
         <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
         </script>
-    <body onmousemove = 'changeData(0)'>
+    <body onmousemove = 'changeData(0)' onload = "addListeners()">
         <header>
             <div class = "heading clearfix"  >
                 <div class = "textNone lastname">dsp-cts-drogovoz-grishina-tyan</div>
@@ -185,6 +186,9 @@
                                 <ul id = "sub-program" class = "sub-ul">
                                     <li style = "border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;"class = "sub-li">Данный сайт предназначен </br>для иллюстрации многоканальных </br>сигналов. Чтобы посмотреть графики, </br>следует открыть нужный файл</br> и загрузить его на сайт</li>                                    
                                 </ul>                                                               
+                            </li>
+                            <li class ="textNone mainLi" id ="prikol">
+                                <basefont>прикол LLRLRRL</basefont>                                
                             </li>                        
                         </ul>
                     </nav>
@@ -216,9 +220,9 @@
                     <div class = 'butt_Menu'><basefont>Спектограмма</basefont></div>
                     <div class = 'butt_Menu'><basefont>Корреляция с...</basefont></div>
                     <div class = 'butt_Menu'><basefont>Кросс-спектр с...</basefont></div>
-                    <div class = 'butt_Menu' onclick="closeSignal(0)" style = "border-top: 1px solid black;"><basefont>Скрыть</basefont></div>
-                    <div class = 'butt_Menu'><basefont>Скрыть всё кроме этого</basefont></div>
-                    <div class = 'butt_Menu'><basefont>Показать всё</basefont></div>
+                    <div class = 'butt_Menu' onclick = "closeSignal(0)" style = "border-top: 1px solid black;"><basefont>Скрыть</basefont></div>
+                    <div class = 'butt_Menu' onclick = "showOneHideAll(0)"><basefont>Скрыть всё кроме этого</basefont></div>
+                    <div class = 'butt_Menu' onclick = "showEverything()"><basefont>Показать всё</basefont></div>
                     <div class = 'butt_Menu' style = "border-top: 1px solid black;"><basefont>Фильтрация</basefont></div>
                     <div style = 'border-bottom-left-radius: 10px'class = 'butt_Menu' onclick = "menuActOff(0)"><basefont>Закрыть меню</basefont></div>
                 </div>
