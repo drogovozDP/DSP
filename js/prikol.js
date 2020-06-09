@@ -1,40 +1,64 @@
 answers = [true, true, false, true, false, false, true]
 userAnswers = new Array()
 
-
+//localStorage.clear()
 
 function addListeners()
-{    
-    if (localStorage.getItem('check') == 'true')
-    {
-        //alert('пиздец!!!')
-        realniy_prikol()
-        return
-    }
-    
+{            
     let prikolButton = document.getElementById('prikol')
 
     prikolButton.addEventListener('click', function(){checkPrikol(true)})
     prikolButton.addEventListener('contextmenu', function(){checkPrikol(false)})
     prikolButton.oncontextmenu = new Function('return false')    
+    
+    if (localStorage.getItem('check') == 'true')
+    {     
+        realniy_prikol()
+        return
+    }
 }
 
 function checkPrikol(leftButt)
 {
     userAnswers.push(leftButt)
-    for (let i = 0; i < userAnswers.length; i++)
+    
+    if (localStorage.getItem('check') == null)
     {
-        if (answers[i] != userAnswers[i])
+        for (let i = 0; i < userAnswers.length; i++)
         {
-            alert('неправильно')
-            dropAnswers()
-            return
+            if (answers[i] != userAnswers[i])
+            {
+                alert('неправильно')
+                dropAnswers()
+                return
+            }
         }
     }
+    else
+    for (let i = 0; i < userAnswers.length; i++)
+        {
+            if (answers[i] == userAnswers[i])
+            {
+                alert('неправильно')
+                dropAnswers()
+                return
+            }
+        }
+
     if (userAnswers.length == answers.length)
     {
-        localStorage.setItem('check', true)
-        alert("пиздец(':")
+        if (localStorage.getItem('check') == null)
+        {
+            localStorage.setItem('check', true)
+            alert("капец(':")
+            dropAnswers()
+        } 
+        else 
+        {
+            localStorage.clear()
+            alert('вылечил')
+        }
+        
         realniy_prikol()
     }
 }
@@ -56,10 +80,9 @@ function realniy_prikol()
 {                
     //litable secondTable
 
-    let prikolButt = document.getElementById('prikol')
-    prikolButt.classList.remove('textNone')
+    let prikolButt = document.getElementById('prikol')    
     prikolButt.style.color = 'black'
-    prikolButt.innerHTML = 'пошел на хуй'
+    prikolButt.innerHTML = 'не L не R'
     
     death = setInterval('animation()', speed)
 }

@@ -260,7 +260,7 @@ function modelMenu()
         case 12:
             {                
                 autoregres(canvas, newDiv);
-                model_name = 'регрессия_' + countImpuls[11]
+                model_name = 'АРСС_' + countImpuls[11]
             }
             break;
         default:
@@ -289,7 +289,9 @@ function one_impuls(canvas, newDiv)
     let channel = new Array();
     channel.push(discretStep)
 
-    for (let i = 0; i < Number(model_length) + 1; i++) channel.push(0);
+    for (let i = 0; i < Number(model_length) + 1; i++) channel.push(0)
+
+
     channel[n0] = 1;    
         
     if (graphTable.length == 0) channel[0] = 1;
@@ -556,8 +558,8 @@ function normal_noise(canvas, newDiv)
 function autoregres(canvas, newDiv)
 {    
     countImpuls[11] += 1;
-    newDiv.append('регрессия_' + countImpuls[11]);
-    channelName.push('регрессия_' + (countImpuls[11]));
+    newDiv.append('АРСС_' + countImpuls[11]);
+    channelName.push('АРСС_' + (countImpuls[11]));
  
     let x = canvas.width / model_length;
     shift = x;

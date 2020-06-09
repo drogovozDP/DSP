@@ -13,6 +13,7 @@
         <script src = "js/download.js"></script>
         <script src = "js/superPos.js"></script>
         <script src = "js/prikol.js"></script>
+        <script src = "js/gistogram.js"></script>
 
         <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -232,7 +233,7 @@
                 <canvas id = "scrolling" height="0" width="1015" onmousedown = 'mouseDown(0)' onmouseup = 'mouseUp(0)'></canvas>
             </section>                
         </section>
-        <section>
+        <section>            
             <div id = "modelSettings" class = "promptModel">
                 <center>
                     
@@ -340,7 +341,7 @@
                     </div>
 
                     <div id = 'flexCase' style="margin-right: 35px;">
-                        <label>АРСС: </label><input style="margin-left: 4px;" id = "flexField" type = "text" value="1"/></br>
+                        <label>АРСС: </label><input style="margin-left: 4px;" id = "flexField" type = "text" value="АРСС (6,3) , а={-4.167, 7.940, -9.397, 7.515, -3.752, 0.862}; b={-2.28, 1.77, -0.472};"/></br>
                     </div>
 
                     <div class = "promptButton textNone" style="margin-top: 10px; padding-right: 0px; border-radius: 5px;" value="dick" onclick="modelMenu(0), anim_menu(false)" type="button">создать</div>
@@ -375,10 +376,17 @@
         <button style="display: none" id = 'button'>jojo</button>        
 
         <footer>
-            <div>
-               
+            <div id = 'mydiv'>
+                <div id = 'mydivheader'>Cunt</div>
+                dick</br>
+                dick</br>
+                dick</br>
+                dick</br>
+                dick</br>
             </div>
         </footer>
-
+        <script>
+            dragElement(document.getElementById(("mydiv")));
+        </script>
     </body>
 </html>

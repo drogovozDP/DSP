@@ -238,3 +238,19 @@ canvas
 #superChoice{
     overflow-y: hidden;    
 }
+
+#mydiv{
+    position: absolute;
+    z-index: 9;
+    background-color: #f1f1f1;
+    border: 1px solid darkgreen;
+    text-align: center;
+}
+
+#mydivheader{
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+}
