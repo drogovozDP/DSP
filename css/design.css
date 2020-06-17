@@ -239,18 +239,31 @@ canvas
     overflow-y: hidden;    
 }
 
-#mydiv{
+.gistogram{
     position: absolute;
     z-index: 9;
-    background-color: #f1f1f1;
-    border: 1px solid darkgreen;
+    background-color: rgb(148, 106, 236); 
+    border: 1px solid rgb(0, 100, 95);
     text-align: center;
+    display: block;
 }
 
-#mydivheader{
+.gistogramHeader{
     padding: 10px;
     cursor: move;
     z-index: 10;
-    background-color: #2196F3;
-    color: #fff;
+    background-color: rgb(134, 88, 232);
+}
+
+.gistItem{
+    padding: 10px;
+}
+
+.gistItem:hover{
+    background-color: rgb(134, 88, 232);
+}
+
+#statistic
+{
+    padding: 10px;
 }

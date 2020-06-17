@@ -139,13 +139,11 @@ function superPosition(plus)
         }
         
         superMap.set(name, name)
-    }
-
-    alert(superMap.get(name))
+    }    
 
     graphTable.push(newChannel)
     channelName.push(name)
     createMenu(graphTable.length - 1)
-    add_info_table('superPos', name)
+    add_info_table(channelName.length - 1, name)
     
 }

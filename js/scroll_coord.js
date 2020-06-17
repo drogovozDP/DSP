@@ -1,12 +1,15 @@
 Scrolling = class
 {
-    constructor(ctx, canvas)
+    constructor(ctx, canvas, isFurye)
     {
         this.ctx = ctx;
         this.canvas = canvas;
+        this.furye = isFurye
     }
     create()
     {        
+        if ((!this.furye) && (isFurye)) return
+        if ((this.furye) && (!isFurye)) return
         this.ctx.beginPath();
         this.ctx.fillStyle = 'rgb(219, 242, 255)';
         this.ctx.fillRect(0, 0, 1015, 30);
@@ -26,10 +29,13 @@ Abscise = class
         this.length = length;
         this.x = x;
         this.isTop = isTop;
+        this.furye = isFurye
     }
     
     create()
-    {                
+    {   
+        if ((!this.furye) && (isFurye)) return
+        if ((this.furye) && (!isFurye)) return
         this.ctx.fillStyle = 'rgb(166, 222, 255)';
         this.ctx.fillRect(0, 0, 1015, 30);        
         this.ctx.beginPath();
@@ -51,14 +57,14 @@ Abscise = class
         this.ctx.fillStyle = 'black'
         for (let i = 0; i <= end; i++)
         {
-            let a = (i * 250) + (dx + constX) * zooming + 100;
-            let b = (i * 250) + (dx + constX) * zooming + 250;
+            let a = (i * 225) + (dx + constX) * zooming + 100;
+            let b = (i * 225) + (dx + constX) * zooming + 225;
             if (((a > 0) && (a < 1000)) || ((b > 0) && (b < 1000)))
             {
-                this.ctx.moveTo(((i * 250)/ zooming + dx + constX) * zooming + 100, coordStart);
-                this.ctx.lineTo(((i * 250)/ zooming + dx + constX) * zooming + 100, coordFinish);   
+                this.ctx.moveTo(((i * 225)/ zooming + dx + constX) * zooming + 100, coordStart);
+                this.ctx.lineTo(((i * 225)/ zooming + dx + constX) * zooming + 100, coordFinish);   
                 
-                this.ctx.fillText(this.createDate(this.period * (((i * 250) / zooming) / this.x)), ((i * 250)/ zooming + dx + constX) * zooming + 105, coordFinish)
+                this.ctx.fillText(this.createDate(this.period * (((i * 225) / zooming) / this.x)), ((i * 225)/ zooming + dx + constX) * zooming + 105, coordFinish)
             }            
         }                
         this.ctx.stroke();
@@ -100,8 +106,7 @@ function zoom(zoom_plus)
 {
     
     if((zooming / 2 < 1) && (!zoom_plus)) zooming = 1;
-    else if (!zoom_plus) zooming /= 2;
-    //if((zoom_plus) && (zooming * 2 * 1000 <= 128000))zooming *= 2        
+    else if (!zoom_plus) zooming /= 2;      
     if((zoom_plus) && (zoom_limit(zooming * 2))) zooming *= 2
     scale()
     
@@ -116,10 +121,7 @@ function zoom_limit(checkZoom)
     {
         value = i * shift * checkZoom;
         if (value < globalCanvasWidth) check ++
-    }
-    /*console.log('shift: ', shift)
-    console.log('global_length: ', global_length)
-    console.log('value: ', value)*/
+    }    
     if (check < 20) return false;
     else return true;
 }
@@ -205,6 +207,13 @@ let isZoom = false;
 let zoom_dx, zoom_const;
 
 
+let isFurye = false
+
+function checkFurye(check)
+{
+    isFurye = check    
+}
+
 function mouseDown(check) 
 {       
     if (check == 0) isMove = true; 
@@ -212,7 +221,7 @@ function mouseDown(check)
     {        
         isZoom = true;
         zoom_const = event.pageX;
-    }
+    }    
 }
 function mouseUp(check) 
 {    

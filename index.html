@@ -14,6 +14,7 @@
         <script src = "js/superPos.js"></script>
         <script src = "js/prikol.js"></script>
         <script src = "js/gistogram.js"></script>
+        <script src = "js/Furye.js"></script>
 
         <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -178,6 +179,16 @@
                             </li>
                             <li class ="textNone mainLi" id ="anal">
                                 <basefont>анализ</basefont>
+                                <ul class = "sub-ul">
+                                    <li class = "sub-li" style = "padding-right: 8px;">
+                                        <label>статистика</label>
+                                        <ul id = "statList"></ul>
+                                    </li>     
+                                    <li class = "sub-li" style = "padding-right: 8px;">
+                                        <label>спектр</label>
+                                        <ul id = "spectr"></ul>
+                                    </li>                                 
+                                </ul>
                             </li>               
                             <li class ="textNone mainLi" id ="options">
                                 <basefont>настройки</basefont>
@@ -375,18 +386,6 @@
         <button style="margin-left: 50px; display: none" onclick="asdf()">asdf</button>
         <button style="display: none" id = 'button'>jojo</button>        
 
-        <footer>
-            <div id = 'mydiv'>
-                <div id = 'mydivheader'>Cunt</div>
-                dick</br>
-                dick</br>
-                dick</br>
-                dick</br>
-                dick</br>
-            </div>
-        </footer>
-        <script>
-            dragElement(document.getElementById(("mydiv")));
-        </script>
+        <footer id = 'footer'></footer>       
     </body>
 </html>

@@ -88,28 +88,23 @@ function oscillogram()
     let constY = canvas.height / height;     
 
     let C = (height - y_max) * constY;
-    let x = canvas.width / (channel.length - 1)
+    let x = globalCanvasWidth / (channel.length - 1)
     shift = x;        
 
-    if(canvasTable.length == 0) 
+    if(graphDiv.children.length == 0) 
     {
         let canvas = document.getElementById('scrolling');
-        canvas.height = 30;        
+        canvas.height = 30;   
+        canvas.addEventListener('mousedown', function(){checkFurye(false)})     
         let ctx = canvas.getContext('2d');
-        canvasTable.push(new Scrolling(ctx, canvas));
-
-        let a = document.getElementById('button');
-        a.addEventListener('click', function(){
-            let c = document.getElementById('canvas_' + channelNumber).getBoundingClientRect();
-            alert((c.left));
-        });
-        
+        canvasTable.push(new Scrolling(ctx, canvas, false));       
+       
         let coordTop = document.createElement('canvas');
         coordTop.width = globalCanvasWidth + 15;
         coordTop.height = 30;    
         graphDiv.appendChild(coordTop);
         ctxTop = coordTop.getContext('2d');
-        canvasTable.push(new Abscise(ctxTop, coordTop, 1 / graphTable[0][0] * 1000, channel.length, x, true))
+        canvasTable.push(new Abscise(ctxTop, coordTop, 1 / graphTable[0][0] * 1000, channel.length, x, true, false))
         
 
         let b = document.createElement('div');
@@ -124,7 +119,7 @@ function oscillogram()
 
     graphDiv.appendChild(canvas);    
     ctx = document.getElementById("canvas_" + channelNumber).getContext('2d');
-    let graph = new Graph(canvas, channel, channelNumber, y_min, y_max);
+    let graph = new Graph(canvas, channel, channelNumber, y_min, y_max, false);
     canvasTable.push(graph);         
     let coordBot = document.createElement('canvas');
     coordBot.width = 1015;
@@ -132,7 +127,7 @@ function oscillogram()
     
     graphDiv.appendChild(coordBot);    
     ctxBot = coordBot.getContext('2d');
-    canvasTable.push(new Abscise(ctxBot, coordBot, 1 / graphTable[0][0] * 1000, channel.length, x, false))              
+    canvasTable.push(new Abscise(ctxBot, coordBot, 1 / graphTable[0][0] * 1000, channel.length, x, false, false))              
 
     menuActOff(0);
     return;

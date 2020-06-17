@@ -106,7 +106,7 @@ function modelMenu()
         a_field = Number(document.getElementById('a_field').value);
         sigma = Number(document.getElementById('sigma').value);
 
-        if ((a_field == null) || (isNaN(a_field)) || (sigma < a_field) || (isNaN(sigma))) return;        
+        if ((a_field == null) || (isNaN(a_field)) || (isNaN(sigma))) return;        
     }
 
     if (currModel == 12)
@@ -545,7 +545,7 @@ function normal_noise(canvas, newDiv)
         return a - 6;
     }    
 
-    for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field + sigma * sigma * Sum())                
+    for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field + sigma * 1 * Sum())                
         
     if (graphTable.length == 0) channel[0] = 1;
     else channel[0] = graphTable[0][0];

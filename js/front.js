@@ -87,7 +87,7 @@ function dropGraphic()
     globalInterval = null;
 
     let graphics = document.getElementById('graph');
-    while(graphics.firstChild)
+    while (graphics.firstChild)
     {
         graphics.removeChild(graphics.firstChild);
     }
@@ -95,6 +95,15 @@ function dropGraphic()
     document.getElementById('scrolling').height = '0px';
     setScale(true);
     shift = 0;
+    let footer = document.getElementById('footer')
+    while (footer.firstChild) footer.removeChild(footer.firstChild)
+    statTable = []
+    
+    let statList = document.getElementById('statList')
+    while (statList.firstChild)
+    {
+        statList.removeChild(statList.firstChild)
+    }
 }
 
 function createMenu(i)
@@ -193,6 +202,8 @@ function add_info_table(i, fileName)
     newTr.appendChild(newTdContent);
     document.getElementById('TChannels').appendChild(newTr);
     
+    addSpectr(i)
+    addStatistics(i)
     superList(true)
 }
 
