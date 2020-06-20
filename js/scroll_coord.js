@@ -7,15 +7,17 @@ Scrolling = class
         this.furye = isFurye
     }
     create()
-    {        
-        if ((!this.furye) && (isFurye)) return
-        if ((this.furye) && (!isFurye)) return
+    {         
         this.ctx.beginPath();
         this.ctx.fillStyle = 'rgb(219, 242, 255)';
         this.ctx.fillRect(0, 0, 1015, 30);
         this.ctx.fillStyle = 'black';
         this.ctx.fillRect(0 - dx - constX, 0, 1015 / zooming, 30);
         this.ctx.closePath();
+    }
+    reloadFurye()
+    {
+        return
     }
 }
 
@@ -29,13 +31,10 @@ Abscise = class
         this.length = length;
         this.x = x;
         this.isTop = isTop;
-        this.furye = isFurye
     }
     
     create()
-    {   
-        if ((!this.furye) && (isFurye)) return
-        if ((this.furye) && (!isFurye)) return
+    {           
         this.ctx.fillStyle = 'rgb(166, 222, 255)';
         this.ctx.fillRect(0, 0, 1015, 30);        
         this.ctx.beginPath();
@@ -97,6 +96,10 @@ Abscise = class
         if (data.getFullYear() - 1970 < 10) year = '0' + year;
 
         return day + '-' + month + '-' + year + ' ' + hour + ':' + min + ':' + sec;
+    }
+    reloadFurye()
+    {
+        return
     }
 }
 
@@ -174,8 +177,7 @@ function closeSignal(check)
         }
     }
 
-    
-
+        
     if (canvasTable.length == 6) graphDiv.style.height = '530px';
     if (canvasTable.length == 5) graphDiv.style.height = '377px';
     if (canvasTable.length == 4) graphDiv.style.height = '225px';
@@ -209,11 +211,6 @@ let zoom_dx, zoom_const;
 
 let isFurye = false
 
-function checkFurye(check)
-{
-    isFurye = check    
-}
-
 function mouseDown(check) 
 {       
     if (check == 0) isMove = true; 
@@ -237,6 +234,11 @@ function mouseUp(check)
         isZoom = false;
         viewSize(zoom_const, zoom_dx)
         zoom_const = zoom_dx = 0;
+    }
+
+    for (let i = 0; i < canvasTable.length; i++)
+    {
+        canvasTable[i].reloadFurye()
     }
 }
 

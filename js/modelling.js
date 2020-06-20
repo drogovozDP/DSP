@@ -437,7 +437,7 @@ function exp_ogib(canvas, newDiv)
     
     for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field * 
         Math.exp((-i)/tau) *
-        Math.cos(2 * Math.PI * f_field * discretStep * i + varphi)
+        Math.cos(2 * Math.PI * f_field * (1 / discretStep) * i + varphi)
     )
 
     if (graphTable.length == 0) channel[0] = 1;
@@ -461,8 +461,8 @@ function balance(canvas, newDiv)
     channel.push(discretStep)
     
     for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field * 
-        Math.cos(2 * Math.PI * f_zero_field * discretStep * i) * 
-        Math.cos(2 * Math.PI * f_n * discretStep * i + varphi)
+        Math.cos(2 * Math.PI * f_zero_field * (1 / discretStep) * i) * 
+        Math.cos(2 * Math.PI * f_n * (1 / discretStep) * i + varphi)
     )
         
     if (graphTable.length == 0) channel[0] = 1;
@@ -487,8 +487,8 @@ function tonal(canvas, newDiv)
     
     for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field * 
         (1 + m_field * 
-            Math.cos(2 * Math.PI * f_zero_field * discretStep * i) * 
-        Math.cos(2 * Math.PI * f_n * discretStep * i + varphi)
+            Math.cos(2 * Math.PI * f_zero_field * (1 / discretStep) * i) * 
+        Math.cos(2 * Math.PI * f_n * (1 / discretStep) * i + varphi)
         )
     )
         

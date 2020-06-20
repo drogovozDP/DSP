@@ -1,6 +1,6 @@
 Graph = class
 {
-    constructor(canvas, channel, channelNumber, y_min, y_max, isFurye)
+    constructor(canvas, channel, channelNumber, y_min, y_max)
     {        
         this.x = (canvas.width - 100) / (channel.length - 1);        
         this.constY = canvas.height / (y_max - y_min);
@@ -8,12 +8,10 @@ Graph = class
         this.channel = channel; 
         this.CONST = (-y_min) * (canvas.height / (y_max - y_min));//let C = (height - y_max) * constY;
         this.ctx = canvas.getContext('2d');
-        this.channelNumber = channelNumber;
-        this.current_step = 0;
+        this.channelNumber = channelNumber;        
         this.y_min = y_min;
         this.y_max = y_max;
         this.data = []
-        this.furye = isFurye
     }
     
     setScale(max, min)
@@ -24,10 +22,8 @@ Graph = class
     }
 
     create()
-    {      
-        if ((!this.furye) && (isFurye)) return
-        if ((this.furye) && (!isFurye)) return
-        
+    {       
+        if (this.data.length != 0) this.data = [] 
         this.ctx.beginPath();        
         this.ctx.fillStyle = 'rgb(219, 242, 255)';
         this.ctx.fillRect(100, 0, this.canvas.width - 100, this.canvas.height); 
@@ -123,8 +119,16 @@ Graph = class
         this.ctx.stroke();
         this.ctx.closePath(); 
         this.ordinate(ordMax, ordMin);
-        this.statistic()          
-    }        
+        this.statistic()                        
+    }    
+    
+    reloadFurye()
+    {
+        for (let i = 0; i < furyeTable.length; i++)
+        {
+            if (furyeTable[i].channelNumber == this.channelNumber) furyeTable[i].reload(this.data)
+        }
+    }
     
     ordinate(max, min)
     {
@@ -140,7 +144,7 @@ Graph = class
         this.ctx.fillStyle = 'black';   
 
         this.ctx.fillText(max, 0, 14)
-        this.ctx.fillText(Math.floor(min + (max - min) / 2), 0, 75)
+        this.ctx.fillText((min + (max - min) / 2), 0, 75)
         this.ctx.fillText(min, 0, 120)
         this.ctx.fillText(channelName[this.channelNumber], 0, 140)
 
@@ -157,7 +161,11 @@ Graph = class
         let window = document.getElementById(this.channelNumber + '_statistic')
         if (window == null) return
 
-        let kvantil = this.data
+        let kvantil = new Array(this.data.length)
+        for (let i = 0; i < kvantil.length; i++)
+        {
+            kvantil[i] = this.data[i]
+        }
         function compareNumeric(a, b) 
         {
             if (a > b) return 1;
@@ -166,7 +174,8 @@ Graph = class
         }                    
         kvantil.sort(compareNumeric);
 
-
+   
+        
         let h = (kvantil[kvantil.length - 1] - kvantil[0]) / global_K
         let gistogram = []
         for (let i = 0; i < global_K; i++) gistogram.push(0)
@@ -183,7 +192,7 @@ Graph = class
         for (let i = 0; i < gistogram.length; i++)
         {
             if (gistMax < gistogram[i]) gistMax = gistogram[i]
-        }        
+        }                
 
         let maxHeight = window.lastChild.height
         let colWidth = window.lastChild.width / global_K
@@ -207,8 +216,7 @@ Graph = class
         }
         middle /= this.data.length        
         
-        if ((dx == 0) && (window.children[0].textContent != ''))return
-        //if ('Среднее: = ' + middle == window.children[0].textContent) return
+        if ((dx == 0) && (window.children[0].textContent != '')) return    
 
         let dispersia = 0
         for (let i = 0; i < this.data.length; i++)
@@ -257,9 +265,13 @@ Graph = class
         window.children[7].innerHTML = 'Минимум = ' + min
         window.children[8].innerHTML = 'Квантиль 0.05 = ' + kvantil[Math.floor(kvantil.length * 0.05)]
         window.children[9].innerHTML = 'Квантиль 0.95 = ' + kvantil[Math.floor(kvantil.length * 0.95)]
-        window.children[10].innerHTML = 'Медиана = ' + kvantil[Math.floor(kvantil.length * 0.5)]       
-        
-        this.data = []
+        window.children[10].innerHTML = 'Медиана = ' + kvantil[Math.floor(kvantil.length * 0.5)] 
+        kvantil = []
+    }
+
+    isFurye()
+    {
+        return false
     }
     //------------------------------------код------------------------------------------------------//
     

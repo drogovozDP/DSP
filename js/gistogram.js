@@ -38,7 +38,7 @@ function dragElement(elmnt) //elmnt
         pos4 = e.clientY;
         // set the element's new position:
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";        
     }
 
     function closeDragElement() 
@@ -47,15 +47,6 @@ function dragElement(elmnt) //elmnt
         document.onmouseup = null;
         document.onmousemove = null;
     }
-}
-
-function hide_z(table)
-{    
-    for (let i = 0; i < statTable.length; i++)
-    {
-        statTable[i].style.zIndex = 9
-    }
-    table.style.zIndex = 10
 }
 
 function addStatistics(i)
@@ -78,8 +69,7 @@ function create_window(i)
 
     let header = document.createElement('div')
     header.id = i + '_gistogramHeader'
-    header.className = 'gistogramHeader'
-    header.addEventListener('click', function(){hide_z(main)})
+    header.className = 'gistogramHeader'    
     header.innerHTML = channelName[i]
     header.style.textAlign = 'left'
 

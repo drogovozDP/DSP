@@ -50,14 +50,14 @@ function move()
 {        
     if (!globalInterval) 
     {        
-        globalInterval = setInterval('scale()', 10);      
+        globalInterval = setInterval('scale()', 20);      
     }
 }
 
 function oscillogram()
 {
     let check = true;
-    for (let i = 0; i < canvasTable.length; i++) if (canvasTable[i].channelNumber == channelNumber) check = false;
+    for (let i = 0; i < canvasTable.length; i++) if ((canvasTable[i].channelNumber == channelNumber) && (!canvasTable[i].isFurye())) check = false;
     if (!check) 
     {
         menuActOff(0);
@@ -94,8 +94,7 @@ function oscillogram()
     if(graphDiv.children.length == 0) 
     {
         let canvas = document.getElementById('scrolling');
-        canvas.height = 30;   
-        canvas.addEventListener('mousedown', function(){checkFurye(false)})     
+        canvas.height = 30;           
         let ctx = canvas.getContext('2d');
         canvasTable.push(new Scrolling(ctx, canvas, false));       
        
@@ -104,7 +103,7 @@ function oscillogram()
         coordTop.height = 30;    
         graphDiv.appendChild(coordTop);
         ctxTop = coordTop.getContext('2d');
-        canvasTable.push(new Abscise(ctxTop, coordTop, 1 / graphTable[0][0] * 1000, channel.length, x, true, false))
+        canvasTable.push(new Abscise(ctxTop, coordTop, 1 / graphTable[0][0] * 1000, channel.length, x, true))
         
 
         let b = document.createElement('div');
@@ -119,7 +118,7 @@ function oscillogram()
 
     graphDiv.appendChild(canvas);    
     ctx = document.getElementById("canvas_" + channelNumber).getContext('2d');
-    let graph = new Graph(canvas, channel, channelNumber, y_min, y_max, false);
+    let graph = new Graph(canvas, channel, channelNumber, y_min, y_max);
     canvasTable.push(graph);         
     let coordBot = document.createElement('canvas');
     coordBot.width = 1015;
@@ -127,7 +126,7 @@ function oscillogram()
     
     graphDiv.appendChild(coordBot);    
     ctxBot = coordBot.getContext('2d');
-    canvasTable.push(new Abscise(ctxBot, coordBot, 1 / graphTable[0][0] * 1000, channel.length, x, false, false))              
+    canvasTable.push(new Abscise(ctxBot, coordBot, 1 / graphTable[0][0] * 1000, channel.length, x, false))              
 
     menuActOff(0);
     return;
@@ -172,7 +171,8 @@ function sss()
 
 function scale()
 {                         
-    for(let i = 0; i < canvasTable.length; i++) canvasTable[i].create();    
+    for(let i = 0; i < canvasTable.length; i++) canvasTable[i].create()
+    for (let i = 0; i < furyeTable.length; i++) furyeTable[i].create()
     //if (!isMove){document.getElementById('coord_x').innerHTML = graph.getZoom() * (-graph.getConst(true) + dinamicX - canvas.width / 2);document.getElementById('coord_y').innerHTML = graph.getConst(false) - dinamicY + canvas.height / 2 + 96;}        
 }
 

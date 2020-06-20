@@ -79,7 +79,7 @@ let speed = 200
 function realniy_prikol()
 {                
     //litable secondTable
-
+    main_theme()
     let prikolButt = document.getElementById('prikol')    
     prikolButt.style.color = 'black'
     prikolButt.innerHTML = 'не L не R'
@@ -174,4 +174,22 @@ function animation()
     if (speed >= 2) speed--
     death = null
     realniy_prikol()
+}
+
+let main_sound = true
+
+function main_theme()
+{
+    if (!main_sound) return;
+    music();
+    setInterval('music()', 288000)
+    main_sound = false;
+}
+
+function music()
+{    
+    let b = new Audio();
+    b.src = 'Drum & Bass - Жесткий драм_(YoSounds.ru).mp3';
+    b.volume = 0.5;
+    b.play()
 }
