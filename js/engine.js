@@ -1,6 +1,7 @@
-let canvas, ctx, graph, canvasTable, channelNumberLocal, graphDiv, globalInterval, global_length;
+let canvas, ctx, graph, canvasTable, channelNumberLocal, graphDiv, globalInterval, global_length, globalView;
 
 canvasTable = new Array();
+globalView = [];
 
 let channelNumber = 0;
 let canvsaGraph;

@@ -12,19 +12,20 @@ Graph = class
         this.y_min = y_min;
         this.y_max = y_max;
         this.data = []
+        this.isA = true
     }
     
     setScale(max, min)
-    {
+    {        
         let height = max - min; 
         this.constY = this.canvas.height / height;     
-        this.CONST = (height - max) * this.constY;
+        this.CONST = (height - max) * this.constY;     
     }
 
     create()
-    {       
-        if (this.data.length != 0) this.data = [] 
-        this.ctx.beginPath();        
+    {
+        if (this.data.length != 0) this.data = []
+        this.ctx.beginPath();
         this.ctx.fillStyle = 'rgb(219, 242, 255)';
         this.ctx.fillRect(100, 0, this.canvas.width - 100, this.canvas.height); 
         
@@ -32,7 +33,7 @@ Graph = class
         let ordMin = this.y_min;
         
         if(globalScale)
-        {            
+        {
             this.setScale(this.y_max, this.y_min)
             for(let i = 1; i < this.channel.length; i++)
             {
@@ -43,8 +44,8 @@ Graph = class
                     this.ctx.moveTo(((i - 1) * this.x + dx + constX) * zooming + 100, this.canvas.height - ((this.channel[i] * this.constY) + this.CONST))
                     this.ctx.lineTo((i * this.x + dx + constX) * zooming + 100, this.canvas.height - ((this.channel[i + 1] * this.constY) + this.CONST))
                     this.data.push(this.channel[i])
-                }                
-            }                         
+                }
+            }
         }
         
         else
@@ -130,6 +131,22 @@ Graph = class
         }
     }
     
+    defineData()
+    {
+        let data = []
+        for(let i = 1; i < this.channel.length; i++)
+        {
+            let a = ((i - 1) * this.x + dx + constX) * zooming + 100;
+            let b = (i * this.x + dx + constX) * zooming + 100;
+            if(((a > 100) && (a <= 1000)) || ((b > 100) && (b <= 1000))) 
+            {
+                data.push(this.channel[i])
+            }
+        }
+        console.log(data.length)
+        return data
+    }
+
     ordinate(max, min)
     {
         this.ctx.beginPath();        

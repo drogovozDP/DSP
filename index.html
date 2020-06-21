@@ -15,6 +15,7 @@
         <script src = "js/prikol.js"></script>
         <script src = "js/gistogram.js"></script>
         <script src = "js/Furye.js"></script>
+        <script src = "js/delete.js"></script>
 
         <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -192,6 +193,19 @@
                             </li>               
                             <li class ="textNone mainLi" id ="options">
                                 <basefont>настройки</basefont>
+                                <ul>
+                                    <li class = "sub-li" style = "padding: 10px; margin-top: 18px;">
+                                        <div>
+                                            N: <input id = "globalLength" style = "margin-left: 1px;" type = "text"/>
+                                        </div>
+                                        <div>
+                                            чд:<input id = "discretStep" type = "text"/>
+                                        </div>                    
+                                        <div style = "text-align: center; margin-left: 25px;" class = "promptButton textNone" onclick = "upload()">
+                                            ок
+                                        </div>                                        
+                                    </li>
+                                </ul>
                             </li>
                             <li class ="textNone mainLi" id ="program">
                                 <basefont>о программе</basefont>
@@ -386,6 +400,6 @@
         <button style="margin-left: 50px; display: none" onclick="asdf()">asdf</button>
         <button style="display: none" id = 'button'>jojo</button>        
 
-        <footer id = 'footer'></footer>       
+        <footer id = 'footer'></footer>  
     </body>
 </html>

@@ -7,7 +7,7 @@ function dragElement(elmnt) //elmnt
 
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     if (document.getElementById(elmnt.id + "Header"))
-    {
+    {        
         /* if present, the header is where you move the DIV from:*/
         document.getElementById(elmnt.id + "Header").onmousedown = dragMouseDown;
     } else 
@@ -29,9 +29,9 @@ function dragElement(elmnt) //elmnt
     }
 
     function elementDrag(e) 
-    {
+    {        
         e = e || window.event;
-        // calculate the new cursor position:
+        // calculate the new cursor position:        
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;

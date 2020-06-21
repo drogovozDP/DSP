@@ -31,9 +31,7 @@ function showFile(input){
         for(let i = 0; i < 12; i++)
         {
             if(dataTable[i][0] == '#') dataTable.splice(i, 1);
-        }
-
-        
+        }        
         
         let channels = Number(dataTable[0]);
         for (let i = 0; i < channels; i++) graphTable[i] = new Array();
@@ -104,6 +102,9 @@ function dropGraphic()
     {
         statList.removeChild(statList.firstChild)
     }
+    closeWindow()
+    let spec = document.getElementById('spectr')
+    while (spec.firstChild) spec.removeChild(spec.firstChild)
 }
 
 function createMenu(i)
@@ -305,25 +306,25 @@ function RangeDistance(startDate, startTime)
 }
 
 function viewSize(n1, n2)
-{
+{    
     let begin, end;
     if((typeof(n1) == 'undefined') && (typeof(n2) == 'undefined'))
     {
         begin = Number(document.getElementById('setBegin').value);
-        end = Number(document.getElementById('setEnd').value);
+        end = Number(document.getElementById('setEnd').value);        
         if ((begin >= end) || (graphTable.length == 0)) return;
     }
     else 
     {
         if (n1 < n2)
-        {
-            begin = n1 / shift;
-            end = n2 / shift;
+        {            
+            begin = n1 / shift
+            end = n2 / shift
         }
         else
         {
-            begin = n2;
-            end = n1;
+            begin = n2
+            end = n1
         }
     }
                 
@@ -332,4 +333,6 @@ function viewSize(n1, n2)
     let a = ((graphTable[0].length - 1) * 1) / Math.abs(end - begin);
     if (zoom_limit(a))zooming = a;
     if (zooming < 1) zooming = 1;
+    scale()
+    for (let i = 0; i < canvasTable.length; i++) canvasTable[i].reloadFurye()
 }
