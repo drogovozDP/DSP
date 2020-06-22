@@ -2,7 +2,7 @@ function upload()
 {
     let N = Number(document.getElementById('globalLength').value)
     if (isNaN(N)) return
-    model_length = N
+    model_length = global_length = N
     let discret = Number(document.getElementById('discretStep').value)
     if (isNaN(discret)) return
     discretStep = discret
@@ -25,6 +25,6 @@ function upload()
     let table = document.getElementById('TChannels')
     let length = table.children.length
     for (let i = 1; i < length; i++)
-        table.removeChild(table.children[1])    
-    console.log(discretStep)
+        table.removeChild(table.children[1])   
+    alert('длина канала = ' + N + ', частота дискретизации = ' + discret)         
 }

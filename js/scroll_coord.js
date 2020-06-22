@@ -114,6 +114,7 @@ function zoom(zoom_plus)
     if((zoom_plus) && (zoom_limit(zooming * 2))) zooming *= 2
     scale()
     for (let i = 0; i < canvasTable.length; i++) canvasTable[i].reloadFurye()
+    console.log(zooming)
 }
 
 function zoom_limit(checkZoom)
@@ -132,7 +133,7 @@ function zoom_limit(checkZoom)
 
 
 function setScale(isGlobal)
-{
+{    
     globalScale = isGlobal;
 }
 

@@ -486,11 +486,12 @@ function tonal(canvas, newDiv)
     channel.push(discretStep)
     
     for (let i = 0; i < Number(model_length) + 1; i++) channel.push(a_field * 
-        (1 + m_field * 
-            Math.cos(2 * Math.PI * f_zero_field * (1 / discretStep) * i) * 
+        ((1 + m_field * 
+            Math.cos(2 * Math.PI * f_zero_field * (1 / discretStep) * i)) * 
         Math.cos(2 * Math.PI * f_n * (1 / discretStep) * i + varphi)
         )
     )
+    console.log(a_field, m_field, Math.PI, f_zero_field, 1 / discretStep, f_n, varphi)
         
     if (graphTable.length == 0) channel[0] = 1;
     else channel[0] = graphTable[0][0];
