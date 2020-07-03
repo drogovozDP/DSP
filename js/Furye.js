@@ -123,14 +123,14 @@ function furye_window()
     furyeTable.push(new ScrollingF(scroll.getContext('2d'), scroll, true));
 
     furyeTable.push(new AbsciseF(top_canvas.getContext('2d'), 
-                            top_canvas, 1 / graphTable[0][0] * 1000, 
+                            top_canvas, 1 / graphTable[0][0], // было 1 / graphTable[0][0] * 1000
                             graphTable[0].length - 1, 
                             globalCanvasWidth / (graphTable[0].length - 1),
                             true
                         )
                     )
     furyeTable.push(new AbsciseF(top_canvas.getContext('2d'), 
-                    top_canvas, 1 / graphTable[0][0] * 1000, 
+                    top_canvas, 1 / graphTable[0][0], 
                     graphTable[0].length - 1, 
                     globalCanvasWidth / (graphTable[0].length - 1),
                     true
@@ -252,7 +252,7 @@ function drawSpectr(i)
     canvas.width = 1000
     canvas.height = 30  
     furyeTable.push(new AbsciseF(canvas.getContext('2d'), 
-                            canvas, 1 / graphTable[0][0] * 1000, 
+                            canvas, 1 / graphTable[0][0], 
                             graphTable[0].length - 1, 
                             globalCanvasWidth / (graphTable[0].length - 1),
                             false
@@ -276,8 +276,7 @@ function addSpectr(i)
     new_li = document.createElement('li')
     new_li.className = 'litable sub-li'
     new_li.innerHTML = channelName[i]
-    new_li.id = 'spec_' + i
-    new_li.style.marginLeft = '37px'
+    new_li.id = 'spec_' + i    
 
     new_li.addEventListener('click', function(){drawSpectr(i)})
 

@@ -22,8 +22,24 @@ Graph = class
         this.CONST = (height - max) * this.constY;     
     }
 
-    create()
+    totalChannel()
     {
+        let data = []  
+        let a = 0
+        let b = 0             
+        for (let i = 1; i < this.channel.length; i++)        
+        {
+            a = ((i - 1) * this.x + dx + constX) * zooming + 100;
+            b = (i * this.x + dx + constX) * zooming + 100;
+
+            if(((a > 100) && (a <= 1000)) || ((b > 100) && (b <= 1000))) 
+                data.push(this.channel[i])
+        }        
+        return data
+    }
+
+    create()
+    {        
         if (this.data.length != 0) this.data = []
         this.ctx.beginPath();
         this.ctx.fillStyle = 'rgb(219, 242, 255)';
@@ -46,6 +62,7 @@ Graph = class
                     this.data.push(this.channel[i])
                 }
             }
+            //console.log(this.data.length)
         }
         
         else

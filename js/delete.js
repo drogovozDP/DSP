@@ -21,6 +21,7 @@ function upload()
     document.getElementById('startDateTime').innerHTML = ''
     document.getElementById('endDateTime').innerHTML = ''
     document.getElementById('range').innerHTML = ''
+    channelName = []
 
     let table = document.getElementById('TChannels')
     let length = table.children.length

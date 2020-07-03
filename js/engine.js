@@ -172,9 +172,9 @@ function sss()
 
 function scale()
 {                         
-    for(let i = 0; i < canvasTable.length; i++) canvasTable[i].create()
-    for (let i = 0; i < furyeTable.length; i++) furyeTable[i].create()
-    //if (!isMove){document.getElementById('coord_x').innerHTML = graph.getZoom() * (-graph.getConst(true) + dinamicX - canvas.width / 2);document.getElementById('coord_y').innerHTML = graph.getConst(false) - dinamicY + canvas.height / 2 + 96;}        
+    for(let i = 0; i < canvasTable.length; i++) canvasTable[i].create()        
+    
+    for (let i = 0; i < furyeTable.length; i++) furyeTable[i].create()            
 }
 
 

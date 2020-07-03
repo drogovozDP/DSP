@@ -113,8 +113,7 @@ function zoom(zoom_plus)
     else if (!zoom_plus) zooming /= 2;      
     if((zoom_plus) && (zoom_limit(zooming * 2))) zooming *= 2
     scale()
-    for (let i = 0; i < canvasTable.length; i++) canvasTable[i].reloadFurye()
-    console.log(zooming)
+    for (let i = 0; i < canvasTable.length; i++) canvasTable[i].reloadFurye()    
 }
 
 function zoom_limit(checkZoom)
@@ -230,13 +229,23 @@ function mouseUp(check)
         isMove = false; 
         constX += -(dinamicX - dataX);
         dx = 0;    
-        for (let i = 0; i < canvasTable.length; i++) canvasTable[i].reloadFurye()
+        for (let i = 0; i < canvasTable.length; i++) 
+        {
+            canvasTable[i].reloadFurye()
+            if ((canvasTable[i].channelNumber == spectrogram.channelNumber) && (spectrogram != undefined)) 
+            {
+                spectrogram.channel = canvasTable[i].totalChannel()
+                spectrogram.calculate()
+                spectrogram.create()
+            }            
+        }        
     }
     if ((check == 1) && (window.event.button == 0))
     {
         isZoom = false;
         viewSize(zoom_const, zoom_dx)        
         zoom_const = zoom_dx = 0;
+        console.log('dick')
     }    
 }
 

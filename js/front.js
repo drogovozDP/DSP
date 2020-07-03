@@ -59,6 +59,9 @@ function showFile(input){
         
         for (let i = 0; i < channels; i++) graphTable[i].unshift(discretStep);
                    
+        if (channelName.length > graphTable.length)//костыль
+            while(channelName.length > graphTable.length)
+                channelName.pop()
 
         for(let i = 0; i < channelName.length; i++)
         {                                    
@@ -109,6 +112,7 @@ function dropGraphic()
 
 function createMenu(i)
 {
+    console.log(i)
     let newDiv = document.createElement('li');
     if(i == 0) newDiv.className = "newDivTop textNone";
     else if(i == channelName.length - 1) newDiv.className = "newDivBot textNone";
@@ -204,6 +208,7 @@ function add_info_table(i, fileName)
     document.getElementById('TChannels').appendChild(newTr);
     
     addSpectr(i)
+    addSpectrogram(i)
     addStatistics(i)
     superList(true)
 }
