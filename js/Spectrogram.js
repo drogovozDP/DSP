@@ -220,7 +220,7 @@ class Spectrogram
                     let Sum = 0
                     for (let i = L_1; i < L_2; i++)
                     {
-                        Sum += A_np[Math.abs(L * k + i)]                        
+                        Sum += A_np[Math.abs(L * k + i)]
                     }                    
                     A[k] = Sum / L
                 }                                

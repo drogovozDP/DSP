@@ -52,9 +52,7 @@ function showFile(input){
         {
             let newStr = [];
             newStr = subGraphTalbe[i].split(' ');
-            for (let j = 0; j < channels; j++) graphTable[j][i] = Number(newStr[j]);
-            
-            
+            for (let j = 0; j < channels; j++) graphTable[j][i] = Number(newStr[j]);                        
         }        
         
         for (let i = 0; i < channels; i++) graphTable[i].unshift(discretStep);
